@@ -1,9 +1,9 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { TanStackDevtools } from '@tanstack/react-devtools';
 
-import appCss from '../styles.css?url'
-
+import appCss from '../styles.css?url';
+import fontCss from "../fonts.css?url";
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -15,7 +15,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'SHSWO',
       },
     ],
     links: [
@@ -23,6 +23,10 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: appCss,
       },
+      {
+        rel : 'stylesheet',
+        href : fontCss,
+      }
     ],
   }),
   shellComponent: RootDocument,
