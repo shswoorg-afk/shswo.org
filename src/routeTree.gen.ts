@@ -10,33 +10,193 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ActivitesRouteImport } from './routes/activites'
+import { Route as AdvisorsRouteImport } from './routes/advisors'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MembersRouteImport } from './routes/members'
+import { Route as OurteamRouteImport } from './routes/ourteam'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as UpcomingProgramsRouteImport } from './routes/upcoming-programs'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivitesRoute = ActivitesRouteImport.update({
+  id: '/activites',
+  path: '/activites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdvisorsRoute = AdvisorsRouteImport.update({
+  id: '/advisors',
+  path: '/advisors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembersRoute = MembersRouteImport.update({
+  id: '/members',
+  path: '/members',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurteamRoute = OurteamRouteImport.update({
+  id: '/ourteam',
+  path: '/ourteam',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UpcomingProgramsRoute = UpcomingProgramsRouteImport.update({
+  id: '/upcoming-programs',
+  path: '/upcoming-programs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/activites': typeof ActivitesRoute
+  '/advisors': typeof AdvisorsRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
+  '/members': typeof MembersRoute
+  '/ourteam': typeof OurteamRoute
+  '/signup': typeof SignupRoute
+  '/support': typeof SupportRoute
+  '/upcoming-programs': typeof UpcomingProgramsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/activites': typeof ActivitesRoute
+  '/advisors': typeof AdvisorsRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
+  '/members': typeof MembersRoute
+  '/ourteam': typeof OurteamRoute
+  '/signup': typeof SignupRoute
+  '/support': typeof SupportRoute
+  '/upcoming-programs': typeof UpcomingProgramsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/activites': typeof ActivitesRoute
+  '/advisors': typeof AdvisorsRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
+  '/gallery': typeof GalleryRoute
+  '/login': typeof LoginRoute
+  '/members': typeof MembersRoute
+  '/ourteam': typeof OurteamRoute
+  '/signup': typeof SignupRoute
+  '/support': typeof SupportRoute
+  '/upcoming-programs': typeof UpcomingProgramsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/activites'
+    | '/advisors'
+    | '/contact'
+    | '/events'
+    | '/gallery'
+    | '/login'
+    | '/members'
+    | '/ourteam'
+    | '/signup'
+    | '/support'
+    | '/upcoming-programs'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/activites'
+    | '/advisors'
+    | '/contact'
+    | '/events'
+    | '/gallery'
+    | '/login'
+    | '/members'
+    | '/ourteam'
+    | '/signup'
+    | '/support'
+    | '/upcoming-programs'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/activites'
+    | '/advisors'
+    | '/contact'
+    | '/events'
+    | '/gallery'
+    | '/login'
+    | '/members'
+    | '/ourteam'
+    | '/signup'
+    | '/support'
+    | '/upcoming-programs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ActivitesRoute: typeof ActivitesRoute
+  AdvisorsRoute: typeof AdvisorsRoute
+  ContactRoute: typeof ContactRoute
+  EventsRoute: typeof EventsRoute
+  GalleryRoute: typeof GalleryRoute
+  LoginRoute: typeof LoginRoute
+  MembersRoute: typeof MembersRoute
+  OurteamRoute: typeof OurteamRoute
+  SignupRoute: typeof SignupRoute
+  SupportRoute: typeof SupportRoute
+  UpcomingProgramsRoute: typeof UpcomingProgramsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +208,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activites': {
+      id: '/activites'
+      path: '/activites'
+      fullPath: '/activites'
+      preLoaderRoute: typeof ActivitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/advisors': {
+      id: '/advisors'
+      path: '/advisors'
+      fullPath: '/advisors'
+      preLoaderRoute: typeof AdvisorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/members': {
+      id: '/members'
+      path: '/members'
+      fullPath: '/members'
+      preLoaderRoute: typeof MembersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ourteam': {
+      id: '/ourteam'
+      path: '/ourteam'
+      fullPath: '/ourteam'
+      preLoaderRoute: typeof OurteamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/upcoming-programs': {
+      id: '/upcoming-programs'
+      path: '/upcoming-programs'
+      fullPath: '/upcoming-programs'
+      preLoaderRoute: typeof UpcomingProgramsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ActivitesRoute: ActivitesRoute,
+  AdvisorsRoute: AdvisorsRoute,
+  ContactRoute: ContactRoute,
+  EventsRoute: EventsRoute,
+  GalleryRoute: GalleryRoute,
+  LoginRoute: LoginRoute,
+  MembersRoute: MembersRoute,
+  OurteamRoute: OurteamRoute,
+  SignupRoute: SignupRoute,
+  SupportRoute: SupportRoute,
+  UpcomingProgramsRoute: UpcomingProgramsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,6 +1,9 @@
 import Carousel from "./carousel";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { Link } from "@tanstack/react-router";
+import { MdEvent } from "react-icons/md";
+import ImageSlider from "./image.slider";
 const Hero = () => {
   useGSAP(() => {
     const track = document.querySelector(".events-track") as HTMLElement;
@@ -65,6 +68,13 @@ const Hero = () => {
           </p>
         </div>
       </div>
+      <div className="flex justify-center mt-5">
+        <p className="bg-blue-800  border-yellow-500 border-2 
+        text-white text-sm md:text-xl xl:text-xl p-2 rounded-xl font-bold flex justify-center items-center gap-x-1">
+          Go to - Recent/Upcoming Programmes <MdEvent size={15} />
+        </p>
+      </div>
+      <ImageSlider/>
     </main>
   );
 };
