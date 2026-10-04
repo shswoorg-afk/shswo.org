@@ -1,8 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { BiRightArrow } from "react-icons/bi";
-import { RxArrowRight } from "react-icons/rx";
-
 const images = [
     "/slider-img-1.jpeg",
     "/slider-img-2.jpeg",
@@ -12,16 +9,16 @@ const images = [
 const ImageSlider = () => {
     const [changeImage, setchangeImage] = useState<number>(0);
 
-    const handleImage = () => {
+    const handleNextImage = () => {
         setchangeImage((prev) => (prev + 1) % images.length);
+    };
+    const handlePreviousImage = () => {
+        setchangeImage((prev) => (prev - 1 + images.length) % images.length);
     };
     return (
         <div>
             <div className="flex justify-center mt-2">
-                <div className="md:w-120 md:h-120 w-full relative px-2">
-                    <div className="absolute right-0 top-[50%] bg-blue-400 rounded-full p-3 border border-white" onClick={handleImage}>
-                        <RxArrowRight style={{strokeWidth : "0.5"}}/>
-                    </div>
+                <div className="md:w-120 md:h-120 w-full px-2">
                     <Link to="/upcoming-programs">
                     <img
                         src={images[changeImage]}
@@ -31,6 +28,15 @@ const ImageSlider = () => {
                     </Link>
                 </div>
             </div>
+              <div>
+                 <p className="text-xs md:text-base xl:text-base text-center mt-1 text-blue-800">Click the image above to visit upcoming programs</p>
+              </div>
+                <div className="flex justify-center gap-x-4 mt-3">
+                    <button className="bg-blue-600 rounded-full p-1 text-white font-bold cursor-pointer" 
+                    onClick={handlePreviousImage}>&larr; Previous Image</button>
+                    <button className="bg-blue-600 rounded-full p-1 text-white font-bold cursor-pointer" 
+                    onClick={handleNextImage}>Next Image &rarr;</button>
+                </div>
         </div>
     );
 };

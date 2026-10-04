@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ActivitesRouteImport } from './routes/activites'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdvisorsRouteImport } from './routes/advisors'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EventsRouteImport } from './routes/events'
@@ -36,6 +37,11 @@ const AboutRoute = AboutRouteImport.update({
 const ActivitesRoute = ActivitesRouteImport.update({
   id: '/activites',
   path: '/activites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdvisorsRoute = AdvisorsRouteImport.update({
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activites': typeof ActivitesRoute
+  '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activites': typeof ActivitesRoute
+  '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activites': typeof ActivitesRoute
+  '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/activites'
+    | '/admin'
     | '/advisors'
     | '/contact'
     | '/events'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/activites'
+    | '/admin'
     | '/advisors'
     | '/contact'
     | '/events'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/activites'
+    | '/admin'
     | '/advisors'
     | '/contact'
     | '/events'
@@ -187,6 +199,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ActivitesRoute: typeof ActivitesRoute
+  AdminRoute: typeof AdminRoute
   AdvisorsRoute: typeof AdvisorsRoute
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
@@ -220,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/activites'
       fullPath: '/activites'
       preLoaderRoute: typeof ActivitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/advisors': {
@@ -299,6 +319,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ActivitesRoute: ActivitesRoute,
+  AdminRoute: AdminRoute,
   AdvisorsRoute: AdvisorsRoute,
   ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
