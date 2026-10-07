@@ -40,8 +40,16 @@ const Footer = () => {
                             Contact us
                         </Link>
                     </span>
-                    <span>Privacy Policy</span>
-                    <span>Disclaimer</span>
+                    <span>
+                        <Link to="/privacy">
+                            Privacy Policy
+                        </Link>
+                    </span>
+                    <span>
+                        <Link to="/disclaimer">
+                            Disclaimer
+                        </Link>
+                    </span>
                 </div>
             </div>
         </footer>

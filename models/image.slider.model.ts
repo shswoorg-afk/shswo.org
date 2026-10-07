@@ -1,11 +1,12 @@
-import { Schema, type SchemaOptions } from "mongoose";
+import mongoose, { Schema} from "mongoose";
 const imageSliderSchema = new Schema({
 "imageUrl" : {
     type : String,
     required : true,
 },
-"textonImage" : {
+"imageText" : {
     type : String,
     required : true,
 }
-})
+});
+export const imageSliderModel = mongoose.model("ImageSlider", imageSliderSchema);

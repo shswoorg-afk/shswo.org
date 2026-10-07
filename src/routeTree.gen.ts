@@ -15,11 +15,13 @@ import { Route as ActivitesRouteImport } from './routes/activites'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdvisorsRouteImport } from './routes/advisors'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as OurteamRouteImport } from './routes/ourteam'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as UpcomingProgramsRouteImport } from './routes/upcoming-programs'
@@ -57,6 +59,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DisclaimerRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
@@ -80,6 +87,11 @@ const MembersRoute = MembersRouteImport.update({
 const OurteamRoute = OurteamRouteImport.update({
   id: '/ourteam',
   path: '/ourteam',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -120,11 +132,13 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/login': typeof LoginRouteWithChildren
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
+  '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
@@ -139,10 +153,12 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
+  '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
@@ -158,11 +174,13 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/login': typeof LoginRouteWithChildren
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
+  '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
@@ -179,11 +197,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/advisors'
     | '/contact'
+    | '/disclaimer'
     | '/events'
     | '/gallery'
     | '/login'
     | '/members'
     | '/ourteam'
+    | '/privacy'
     | '/signup'
     | '/support'
     | '/upcoming-programs'
@@ -198,10 +218,12 @@ export interface FileRouteTypes {
     | '/admin'
     | '/advisors'
     | '/contact'
+    | '/disclaimer'
     | '/events'
     | '/gallery'
     | '/members'
     | '/ourteam'
+    | '/privacy'
     | '/signup'
     | '/support'
     | '/upcoming-programs'
@@ -216,11 +238,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/advisors'
     | '/contact'
+    | '/disclaimer'
     | '/events'
     | '/gallery'
     | '/login'
     | '/members'
     | '/ourteam'
+    | '/privacy'
     | '/signup'
     | '/support'
     | '/upcoming-programs'
@@ -236,11 +260,13 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AdvisorsRoute: typeof AdvisorsRoute
   ContactRoute: typeof ContactRoute
+  DisclaimerRoute: typeof DisclaimerRoute
   EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
   LoginRoute: typeof LoginRouteWithChildren
   MembersRoute: typeof MembersRoute
   OurteamRoute: typeof OurteamRoute
+  PrivacyRoute: typeof PrivacyRoute
   SignupRoute: typeof SignupRoute
   SupportRoute: typeof SupportRoute
   UpcomingProgramsRoute: typeof UpcomingProgramsRoute
@@ -290,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -323,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/ourteam'
       fullPath: '/ourteam'
       preLoaderRoute: typeof OurteamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -391,11 +431,13 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AdvisorsRoute: AdvisorsRoute,
   ContactRoute: ContactRoute,
+  DisclaimerRoute: DisclaimerRoute,
   EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
   LoginRoute: LoginRouteWithChildren,
   MembersRoute: MembersRoute,
   OurteamRoute: OurteamRoute,
+  PrivacyRoute: PrivacyRoute,
   SignupRoute: SignupRoute,
   SupportRoute: SupportRoute,
   UpcomingProgramsRoute: UpcomingProgramsRoute,

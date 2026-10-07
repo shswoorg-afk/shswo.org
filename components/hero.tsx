@@ -5,6 +5,7 @@ import { MdEvent, MdHealthAndSafety, MdOutlineThunderstorm, MdWork } from "react
 import ImageSlider from "./image.slider";
 import { PiLeaf, PiStudent, PiTrophy } from "react-icons/pi";
 import OurFieldofWorks from "./our.fields.of.work";
+import PopUpLogin from "./pop.up.login";
 const Hero = () => {
   useGSAP(() => {
     const track = document.querySelector(".events-track") as HTMLElement;
@@ -26,6 +27,7 @@ const Hero = () => {
   });
 
   return (
+    <>
     <main className="min-h-screen mt-4">
       <div className="events-container bg-blue-900 h-10 overflow-hidden text-white text-sm md:text-xl font-bold italic">
         <div className="events-track flex w-max items-center gap-x-2 px-2 whitespace-nowrap h-full">
@@ -77,6 +79,7 @@ const Hero = () => {
       <ImageSlider />
       <OurFieldofWorks/>
     </main>
+    </>
   );
 };
 
