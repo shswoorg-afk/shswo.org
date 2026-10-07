@@ -23,6 +23,9 @@ import { Route as OurteamRouteImport } from './routes/ourteam'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as UpcomingProgramsRouteImport } from './routes/upcoming-programs'
+import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as LoginAdvisorRouteImport } from './routes/login/advisor'
+import { Route as LoginMemberRouteImport } from './routes/login/member'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -94,6 +97,21 @@ const UpcomingProgramsRoute = UpcomingProgramsRouteImport.update({
   path: '/upcoming-programs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginIndexRoute = LoginIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LoginRoute,
+} as any)
+const LoginAdvisorRoute = LoginAdvisorRouteImport.update({
+  id: '/advisor',
+  path: '/advisor',
+  getParentRoute: () => LoginRoute,
+} as any)
+const LoginMemberRoute = LoginMemberRouteImport.update({
+  id: '/member',
+  path: '/member',
+  getParentRoute: () => LoginRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -104,12 +122,15 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
+  '/login/advisor': typeof LoginAdvisorRoute
+  '/login/member': typeof LoginMemberRoute
+  '/login/': typeof LoginIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -120,12 +141,14 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
-  '/login': typeof LoginRoute
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
+  '/login/advisor': typeof LoginAdvisorRoute
+  '/login/member': typeof LoginMemberRoute
+  '/login': typeof LoginIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -137,12 +160,15 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
+  '/login/advisor': typeof LoginAdvisorRoute
+  '/login/member': typeof LoginMemberRoute
+  '/login/': typeof LoginIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +187,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/support'
     | '/upcoming-programs'
+    | '/login/advisor'
+    | '/login/member'
+    | '/login/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -171,12 +200,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
-    | '/login'
     | '/members'
     | '/ourteam'
     | '/signup'
     | '/support'
     | '/upcoming-programs'
+    | '/login/advisor'
+    | '/login/member'
+    | '/login'
   id:
     | '__root__'
     | '/'
@@ -193,6 +224,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/support'
     | '/upcoming-programs'
+    | '/login/advisor'
+    | '/login/member'
+    | '/login/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -204,7 +238,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
-  LoginRoute: typeof LoginRoute
+  LoginRoute: typeof LoginRouteWithChildren
   MembersRoute: typeof MembersRoute
   OurteamRoute: typeof OurteamRoute
   SignupRoute: typeof SignupRoute
@@ -312,8 +346,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpcomingProgramsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login/': {
+      id: '/login/'
+      path: '/'
+      fullPath: '/login/'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    '/login/advisor': {
+      id: '/login/advisor'
+      path: '/advisor'
+      fullPath: '/login/advisor'
+      preLoaderRoute: typeof LoginAdvisorRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    '/login/member': {
+      id: '/login/member'
+      path: '/member'
+      fullPath: '/login/member'
+      preLoaderRoute: typeof LoginMemberRouteImport
+      parentRoute: typeof LoginRoute
+    }
   }
 }
+
+interface LoginRouteChildren {
+  LoginAdvisorRoute: typeof LoginAdvisorRoute
+  LoginMemberRoute: typeof LoginMemberRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+}
+
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginAdvisorRoute: LoginAdvisorRoute,
+  LoginMemberRoute: LoginMemberRoute,
+  LoginIndexRoute: LoginIndexRoute,
+}
+
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -324,7 +393,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
-  LoginRoute: LoginRoute,
+  LoginRoute: LoginRouteWithChildren,
   MembersRoute: MembersRoute,
   OurteamRoute: OurteamRoute,
   SignupRoute: SignupRoute,
