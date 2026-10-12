@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import {setCookie} from "@tanstack/react-start/server";
 import { createHmac } from "crypto";
 import { z } from "zod"
+import { ADMIN_PASSWORD, ADMIN_SESSION_SECRET, ADMIN_USERNAME } from "../helpers/env.helper";
 const adminLogin = createServerFn({
     method: "POST",
 
@@ -12,9 +13,9 @@ const adminLogin = createServerFn({
 
     })).handler(
         async ({ data }) => {
-            const username = process.env.ADMIN_USERNAME;
-            const password = process.env.ADMIN_PASSWORD;
-            const secret = process.env.ADMIN_SESSION_SECRET;
+            const username = ADMIN_USERNAME;
+            const password = ADMIN_PASSWORD;
+            const secret = ADMIN_SESSION_SECRET;
             if (!username || !password || !secret) {
                 throw new Error("Admin authentication is not configured")
             }

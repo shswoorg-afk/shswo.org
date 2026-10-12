@@ -1,11 +1,9 @@
 import Carousel from "./carousel";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { MdEvent, MdHealthAndSafety, MdOutlineThunderstorm, MdWork } from "react-icons/md";
+import { MdEvent} from "react-icons/md";
 import ImageSlider from "./image.slider";
-import { PiLeaf, PiStudent, PiTrophy } from "react-icons/pi";
 import OurFieldofWorks from "./our.fields.of.work";
-import PopUpLogin from "./pop.up.login";
 const Hero = () => {
   useGSAP(() => {
     const track = document.querySelector(".events-track") as HTMLElement;

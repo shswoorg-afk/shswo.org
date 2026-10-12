@@ -302,7 +302,7 @@ const PrivacyPolicy = () => {
                               <strong className="text-slate-900">
                                 Email:
                               </strong>{" "}
-                              <span className="break-words">
+                              <span className="wrap-break-word">
                                 shsocialworkorganization@gmail.com /{" "}
                                 shswo.org@gmail.com
                               </span>

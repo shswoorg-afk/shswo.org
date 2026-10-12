@@ -24,10 +24,15 @@ export const Route = createRootRoute({
         href: appCss,
       },
       {
-        rel : 'stylesheet',
-        href : fontCss,
+        rel: 'stylesheet',
+        href: fontCss,
       }
     ],
+    scripts : [
+      {
+        src: "https://upload-widget.cloudinary.com/latest/global/all.js",
+      },
+    ]
   }),
   shellComponent: RootDocument,
 })

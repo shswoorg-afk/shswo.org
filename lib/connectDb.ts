@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
+import { MONGO_URI } from "../helpers/env.helper";
 export const connectDb = async () =>
 {
-    const url = process.env.MONGO_URI as string;
-    await mongoose.connect(url);
+    await mongoose.connect(MONGO_URI);
 }

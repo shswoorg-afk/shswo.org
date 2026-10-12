@@ -8,15 +8,13 @@ const AdminBeforeAuth = ({
   onLoginSuccess,
 }: AdminBeforeAuthProps) => {
   const handleLogin = async (
-    event: React.FormEvent<HTMLFormElement>,
+    event: React.SubmitEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
     try {
-      console.log("handleLogin reached");
-
       const result = await adminLogin({
         data: {
           username: formData.get("username") as string,
