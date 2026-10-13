@@ -27,6 +27,16 @@ const MediaSchema = new Schema(
       required: true,
       index: true,
     },
+    sliderTitle : {
+    type : String,
+    required : false,
+    trim : true,
+    },
+    sliderText : {
+      type : String,
+      required : false,
+      trim : true,
+    }
   },
   {
     timestamps: true,
@@ -35,8 +45,6 @@ const MediaSchema = new Schema(
 
 export type Media = InferSchemaType<typeof MediaSchema>
 
-const MediaModel =
-  mongoose.models.Media ||
-  mongoose.model('Media', MediaSchema)
+const MediaModel =  mongoose.model('Media', MediaSchema)
 
 export default MediaModel

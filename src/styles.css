@@ -15,3 +15,11 @@ body,
 body {
   margin: 0;
 }
+
+button{
+  cursor: pointer;
+}
+
+.admin-border {
+  @apply border border-gray-300/40 py-5 px-3 mt-5;
+}

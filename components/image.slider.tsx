@@ -1,21 +1,28 @@
+
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
-const images = [
-    "/slider-img-1.jpeg",
-    "/slider-img-2.jpeg",
-    "/slider-img-3.jpeg",
-];
+import type { MediaItem } from "../types/media.types";
 
-const ImageSlider = () => {
+interface ImageSliderProps {
+    images: MediaItem[];
+}
+
+const ImageSlider = ({ images }: ImageSliderProps) => {
     const [changeImage, setchangeImage] = useState<number>(0);
 
     const handleNextImage = () => {
         setchangeImage((prev) => (prev + 1) % images.length);
     };
+
     const handlePreviousImage = () => {
         setchangeImage((prev) => (prev - 1 + images.length) % images.length);
     };
+
+    if (images.length === 0) return null;
+
+    const currentImage = images[changeImage];
+
     return (
         <div>
             <div className="flex justify-center mt-2">
@@ -29,15 +36,14 @@ const ImageSlider = () => {
                         </div>
                         <div className="w-full text-left mt-[25%] pl-15 pr-10">
                             <Link to="/upcoming-programs">
-
-                                <h1 className="text-lg whitespace-nowrap underline underline-offset-2">Meeting on health on October</h1>
-                                <p className="text-xs italic">Meeting was based on health care particularly on cancer on 2026</p>
+                                <h1 className="text-lg whitespace-nowrap underline underline-offset-2">{currentImage.sliderTitle}</h1>
+                                <p className="text-xs italic">{currentImage.sliderText}</p>
                             </Link>
                         </div>
                     </div>
                     <img
-                        src={images[changeImage]}
-                        alt={`Event photograph ${changeImage + 1}`}
+                        src={currentImage.url}
+                        alt={currentImage.sliderTitle || currentImage.fileName}
                         className="w-full h-full object-cover rounded-xl"
                     />
                 </div>

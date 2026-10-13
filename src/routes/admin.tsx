@@ -1,10 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import AdminBeforeAuth from "../../components/admin.before.auth";
-import verifyAdminSession from "../../lib/verifyAdminSession"; 
-import adminLogout from "../../serverFunc/adminLogout"; 
+import AdminPage from "../../components/admin";
+import verifyAdminSession from "../../lib/verifyAdminSession";
+import adminLogout from "../../serverFunc/adminLogout";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
@@ -14,42 +15,42 @@ function RouteComponent() {
   const router = useRouter();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
-  // Check the cookie when the route loads.
-  useState(() => {
+  useEffect(() => {
+    let active = true;
+
     verifyAdminSession()
-      .then((result) => setAuthenticated(result.authenticated))
-      .catch(() => setAuthenticated(false));
-  });
+      .then((result) => {
+        if (active) setAuthenticated(result.authenticated);
+      })
+      .catch(() => {
+        if (active) setAuthenticated(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    await adminLogout();
+
+    // Immediately switch to the before-auth page.
+    setAuthenticated(false);
+
+    await router.invalidate();
+  };
 
   if (authenticated === null) {
-    return <div className="bg-black min-h-screen" />;
+    return <div className="min-h-screen bg-black" />;
   }
 
   if (!authenticated) {
     return (
       <AdminBeforeAuth
-        onLoginSuccess={() => {
-          setAuthenticated(true);
-          router.invalidate();
-        }}
+        onLoginSuccess={() => setAuthenticated(true)}
       />
     );
   }
 
-  return (
-    <div className="bg-black text-white min-h-screen p-6">
-      <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-
-      <button
-        onClick={async () => {
-          await adminLogout();
-          setAuthenticated(false);
-          await router.invalidate();
-        }}
-        className="mt-4 rounded-full bg-white text-black px-4 py-2"
-      >
-        Logout
-      </button>
-    </div>
-  );
+  return <AdminPage onLogout={handleLogout} />;
 }

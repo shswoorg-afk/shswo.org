@@ -1,22 +1,25 @@
+
 import { useRef } from "react";
-import gsap  from "gsap";
+import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { images } from "../lib/image"; 
-export default function Carousel() {
+
+interface CarouselProps {
+  images: string[];
+}
+
+export default function Carousel({ images }: CarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+
   useGSAP(
     () => {
       const slides = gsap.utils.toArray<HTMLElement>(".carousel-slide");
 
+      if (slides.length === 0) return;
+
+      gsap.set(slides, { opacity: 0 });
+      gsap.set(slides[0], { opacity: 1 });
+
       if (slides.length <= 1) return;
-
-      gsap.set(slides, {
-        opacity: 0,
-      });
-
-      gsap.set(slides[0], {
-        opacity: 1,
-      });
 
       const timeline = gsap.timeline({
         repeat: -1,
@@ -24,6 +27,7 @@ export default function Carousel() {
 
       slides.forEach((slide, index) => {
         const next = slides[(index + 1) % slides.length];
+
         timeline
           .to(slide, {
             opacity: 0,
@@ -41,9 +45,15 @@ export default function Carousel() {
             "<"
           );
       });
+
+      return () => {
+        timeline.kill();
+      };
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [images], revertOnUpdate: true }
   );
+
+  if (images.length === 0) return null;
 
   return (
     <div
@@ -52,7 +62,7 @@ export default function Carousel() {
     >
       {images.map((image, index) => (
         <div
-          key={index}
+          key={image}
           className="carousel-slide absolute inset-0 w-full p-4 bg-blue-200 flex justify-center"
         >
           <div className="w-full md:w-250 md:h-200">
@@ -64,6 +74,7 @@ export default function Carousel() {
           </div>
         </div>
       ))}
+
       <div className="w-full p-4 invisible">
         <div className="w-full md:w-200 md:h-200">
           <img

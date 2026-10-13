@@ -3,7 +3,7 @@ import { upload } from '@imagekit/react'
 import { MdImage } from 'react-icons/md'
 
 import { getImageKitAuth } from '../lib/imagekit.function'
-import { createMedia } from '../lib/media.function'
+import { createMedia } from '../serverFunc/media.function'
 
 const imageTypes = [
   { label: 'Banner', value: 'banner' },
@@ -31,6 +31,9 @@ export default function ImageUpload() {
   const [uploading, setUploading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [type, setType] = useState<ImageType>('banner')
+
+  const [sliderTitle, setSliderTitle] = useState('')
+  const [sliderText, setSliderText] = useState('')
 
   async function handleUpload(
     event: React.ChangeEvent<HTMLInputElement>,
@@ -62,13 +65,59 @@ export default function ImageUpload() {
       return
     }
 
+    if (
+      type === 'image-slider' &&
+      (!sliderTitle.trim() || !sliderText.trim())
+    ) {
+      setError('Please enter both the slider title and text.')
+      input.value = ''
+      return
+    }
+
     setUploading(true)
 
     let imageUploaded = false
+const MAX_IMAGE_MP = 24;
+const MAX_IMAGE_PIXELS = MAX_IMAGE_MP * 1_000_000;
+const validateImageResolution = (file: File): Promise<string | null> => {
+  return new Promise((resolve) => {
+    const image = new Image();
+    const objectUrl = URL.createObjectURL(file);
 
+    image.onload = () => {
+      const pixels = image.naturalWidth * image.naturalHeight;
+      const megapixels = pixels / 1_000_000;
+
+      URL.revokeObjectURL(objectUrl);
+
+      if (pixels > MAX_IMAGE_PIXELS) {
+        resolve(
+          `Image resolution is ${megapixels.toFixed(2)} MP. ` +
+          `Maximum allowed is ${MAX_IMAGE_MP} MP. ` +
+          `Please resize the image before uploading.`
+        );
+        return;
+      }
+
+      resolve(null);
+    };
+
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve("Unable to read this image. Please select a valid image file.");
+    };
+
+    image.src = objectUrl;
+  });
+};
     try {
       const auth = await getImageKitAuth()
-
+      const resolutionError =   await validateImageResolution(file);
+      if(resolutionError)
+      {
+          setError(resolutionError);
+          return; 
+      }
       const result = await upload({
         file,
         fileName: file.name,
@@ -88,17 +137,28 @@ export default function ImageUpload() {
       imageUploaded = true
       setProgress(100)
       setSaving(true)
-
-      await createMedia({
-        data: {
-          fileId: result.fileId as string,
-          fileName: file.name,
-          url: result.url as string,
-          type,
-        },
+      const mediaData = {
+        fileId: result.fileId as string,
+        fileName: file.name,
+        url: result.url as string,
+        type,
+        ...(type === 'image-slider'
+          ? {
+            sliderTitle: sliderTitle.trim(),
+            sliderText: sliderText.trim(),
+          }
+          : {}),
+      }
+      console.log('Sending media data:', mediaData)
+      await  createMedia({
+        data : mediaData,
       })
-
       setSuccess('Image uploaded and saved successfully.')
+
+      if (type === 'image-slider') {
+        setSliderTitle('')
+        setSliderText('')
+      }
     } catch (err) {
       console.error('Image upload error:', err)
 
@@ -123,7 +183,7 @@ export default function ImageUpload() {
   const busy = uploading || saving
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 admin-border">
       <div className="space-y-1">
         <label
           htmlFor="image-type"
@@ -135,9 +195,11 @@ export default function ImageUpload() {
         <select
           id="image-type"
           value={type}
-          onChange={(event) =>
+          onChange={(event) => {
             setType(event.target.value as ImageType)
-          }
+            setError('')
+            setSuccess('')
+          }}
           disabled={busy}
           className="w-full rounded-lg border border-neutral-300 bg-white p-2 text-black disabled:opacity-50"
         >
@@ -148,6 +210,54 @@ export default function ImageUpload() {
           ))}
         </select>
       </div>
+
+      {type === 'image-slider' && (
+        <div className="space-y-3 rounded-xl border border-neutral-200 p-4">
+          <div className="space-y-1">
+            <label
+              htmlFor="slider-title"
+              className="text-sm font-medium"
+            >
+              Slider Title
+            </label>
+
+            <input
+              id="slider-title"
+              type="text"
+              value={sliderTitle}
+              onChange={(event) =>
+                setSliderTitle(event.target.value)
+              }
+              placeholder="Enter slider title"
+              maxLength={100}
+              disabled={busy}
+              className="w-full rounded-lg border border-neutral-300 p-2 text-black disabled:opacity-50"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label
+              htmlFor="slider-text"
+              className="text-sm font-medium"
+            >
+              Slider Text
+            </label>
+
+            <textarea
+              id="slider-text"
+              value={sliderText}
+              onChange={(event) =>
+                setSliderText(event.target.value)
+              }
+              placeholder="Enter slider description"
+              maxLength={500}
+              rows={3}
+              disabled={busy}
+              className="w-full resize-y rounded-lg border border-neutral-300 p-2 text-black disabled:opacity-50"
+            />
+          </div>
+        </div>
+      )}
 
       <input
         ref={inputRef}

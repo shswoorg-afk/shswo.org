@@ -4,6 +4,8 @@ import { useGSAP } from "@gsap/react";
 import { MdEvent} from "react-icons/md";
 import ImageSlider from "./image.slider";
 import OurFieldofWorks from "./our.fields.of.work";
+import DisplayMedia from "./media.display";
+import EventsMarquee from "./events.marquee";
 const Hero = () => {
   useGSAP(() => {
     const track = document.querySelector(".events-track") as HTMLElement;
@@ -27,35 +29,8 @@ const Hero = () => {
   return (
     <>
     <main className="min-h-screen mt-4">
-      <div className="events-container bg-blue-900 h-10 overflow-hidden text-white text-sm md:text-xl font-bold italic">
-        <div className="events-track flex w-max items-center gap-x-2 px-2 whitespace-nowrap h-full">
-
-          <p className="underline">
-            Our next event is on 28th October
-          </p>
-
-          <span>&bull;</span>
-
-          <p className="underline">
-            Our next event is on 28th October
-          </p>
-
-          <span>&bull;</span>
-
-          <p className="underline">
-            Our next event is on 28th October
-          </p>
-
-          <span>&bull;</span>
-
-          <p className="underline">
-            Our next event is on 28th October
-          </p>
-
-        </div>
-      </div>
-
-      <Carousel />
+     <EventsMarquee/>
+       <DisplayMedia type="banner"/>
       <div className="px-3">
         <div className="bg-cyan-100 mt-2 flex justify-center flex-col items-center rounded-xl py-2">
           <h1 className="text-xl md:text-4xl font-bold text-blue-800">
@@ -74,7 +49,7 @@ const Hero = () => {
           Recent/Upcoming Programmes <MdEvent size={15} />
         </p>
       </div>
-      <ImageSlider />
+      <DisplayMedia type="image-slider"/>
       <OurFieldofWorks/>
     </main>
     </>

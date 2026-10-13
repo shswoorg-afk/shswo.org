@@ -13,6 +13,10 @@ export interface MediaItem {
   fileName: string
   url: string
   type: MediaType
+  description?: string
+  link?: string
+  sliderTitle?: string
+  sliderText?: string
   createdAt: string
   updatedAt: string
 }
