@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMediaByType, deleteMediaByType, deleteMediaById } from "../serverFunc/media.function";
+import { getMediaByType, deleteMediaByType, deleteMediaById } from "../../serverFunc/media.function";
 type BannerImage = {
   _id: string;
   fileId: string;

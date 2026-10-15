@@ -4,7 +4,7 @@ import { connectDb } from '../lib/connectDb'// Your existing DB connector
 import MediaModel from '../models/media.model' // Your Media model
 import { MEDIA_TYPES } from '../types/media.types';
 import verifyAdminSession from "../lib/verifyAdminSession";
-import { imageKit } from '../lib/imagekit.function';
+import { getImageKitClient } from '../lib/imagekit.function';
 const MediaTypeSchema = z.enum(MEDIA_TYPES);
 const CreateMediaSchema = z.object({
     fileId: z.string().min(1),
@@ -80,7 +80,7 @@ export const deleteMediaByType = createServerFn({ method: "POST" })
 
     // Delete the remote ImageKit files first.
     const results = await Promise.allSettled(
-      media.map((item) => imageKit.files.delete(item.fileId)),
+      media.map((item) => getImageKitClient().files.delete(item.fileId)),
     );
 
     const failed = results
@@ -137,7 +137,7 @@ export const deleteMediaByType = createServerFn({ method: "POST" })
     }
 
     // Delete remote ImageKit file first.
-    await imageKit.files.delete(media.fileId);
+    await getImageKitClient().files.delete(media.fileId);
 
     // Delete only this banner's database record.
     await MediaModel.deleteOne({

@@ -22,12 +22,13 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as OurteamRouteImport } from './routes/ourteam'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as UpcomingProgramsRouteImport } from './routes/upcoming-programs'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as LoginAdvisorRouteImport } from './routes/login/advisor'
 import { Route as LoginMemberRouteImport } from './routes/login/member'
+import { Route as SignupAdvisorRouteImport } from './routes/signup/advisor'
+import { Route as SignupMemberRouteImport } from './routes/signup/member'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -94,11 +95,6 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
   path: '/support',
@@ -124,6 +120,16 @@ const LoginMemberRoute = LoginMemberRouteImport.update({
   path: '/member',
   getParentRoute: () => LoginRoute,
 } as any)
+const SignupAdvisorRoute = SignupAdvisorRouteImport.update({
+  id: '/signup/advisor',
+  path: '/signup/advisor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupMemberRoute = SignupMemberRouteImport.update({
+  id: '/signup/member',
+  path: '/signup/member',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -139,11 +145,12 @@ export interface FileRoutesByFullPath {
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/privacy': typeof PrivacyRoute
-  '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
   '/login/advisor': typeof LoginAdvisorRoute
   '/login/member': typeof LoginMemberRoute
+  '/signup/advisor': typeof SignupAdvisorRoute
+  '/signup/member': typeof SignupMemberRoute
   '/login/': typeof LoginIndexRoute
 }
 export interface FileRoutesByTo {
@@ -159,11 +166,12 @@ export interface FileRoutesByTo {
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/privacy': typeof PrivacyRoute
-  '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
   '/login/advisor': typeof LoginAdvisorRoute
   '/login/member': typeof LoginMemberRoute
+  '/signup/advisor': typeof SignupAdvisorRoute
+  '/signup/member': typeof SignupMemberRoute
   '/login': typeof LoginIndexRoute
 }
 export interface FileRoutesById {
@@ -181,11 +189,12 @@ export interface FileRoutesById {
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/privacy': typeof PrivacyRoute
-  '/signup': typeof SignupRoute
   '/support': typeof SupportRoute
   '/upcoming-programs': typeof UpcomingProgramsRoute
   '/login/advisor': typeof LoginAdvisorRoute
   '/login/member': typeof LoginMemberRoute
+  '/signup/advisor': typeof SignupAdvisorRoute
+  '/signup/member': typeof SignupMemberRoute
   '/login/': typeof LoginIndexRoute
 }
 export interface FileRouteTypes {
@@ -204,11 +213,12 @@ export interface FileRouteTypes {
     | '/members'
     | '/ourteam'
     | '/privacy'
-    | '/signup'
     | '/support'
     | '/upcoming-programs'
     | '/login/advisor'
     | '/login/member'
+    | '/signup/advisor'
+    | '/signup/member'
     | '/login/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -224,11 +234,12 @@ export interface FileRouteTypes {
     | '/members'
     | '/ourteam'
     | '/privacy'
-    | '/signup'
     | '/support'
     | '/upcoming-programs'
     | '/login/advisor'
     | '/login/member'
+    | '/signup/advisor'
+    | '/signup/member'
     | '/login'
   id:
     | '__root__'
@@ -245,11 +256,12 @@ export interface FileRouteTypes {
     | '/members'
     | '/ourteam'
     | '/privacy'
-    | '/signup'
     | '/support'
     | '/upcoming-programs'
     | '/login/advisor'
     | '/login/member'
+    | '/signup/advisor'
+    | '/signup/member'
     | '/login/'
   fileRoutesById: FileRoutesById
 }
@@ -267,9 +279,10 @@ export interface RootRouteChildren {
   MembersRoute: typeof MembersRoute
   OurteamRoute: typeof OurteamRoute
   PrivacyRoute: typeof PrivacyRoute
-  SignupRoute: typeof SignupRoute
   SupportRoute: typeof SupportRoute
   UpcomingProgramsRoute: typeof UpcomingProgramsRoute
+  SignupAdvisorRoute: typeof SignupAdvisorRoute
+  SignupMemberRoute: typeof SignupMemberRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -365,13 +378,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/support': {
       id: '/support'
       path: '/support'
@@ -407,6 +413,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginMemberRouteImport
       parentRoute: typeof LoginRoute
     }
+    '/signup/advisor': {
+      id: '/signup/advisor'
+      path: '/signup/advisor'
+      fullPath: '/signup/advisor'
+      preLoaderRoute: typeof SignupAdvisorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup/member': {
+      id: '/signup/member'
+      path: '/signup/member'
+      fullPath: '/signup/member'
+      preLoaderRoute: typeof SignupMemberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -438,9 +458,10 @@ const rootRouteChildren: RootRouteChildren = {
   MembersRoute: MembersRoute,
   OurteamRoute: OurteamRoute,
   PrivacyRoute: PrivacyRoute,
-  SignupRoute: SignupRoute,
   SupportRoute: SupportRoute,
   UpcomingProgramsRoute: UpcomingProgramsRoute,
+  SignupAdvisorRoute: SignupAdvisorRoute,
+  SignupMemberRoute: SignupMemberRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

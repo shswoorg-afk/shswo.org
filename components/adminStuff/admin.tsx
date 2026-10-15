@@ -4,10 +4,12 @@ interface AdminPageProps {
 }
 
 import { useState } from "react";
-import { updateMarquee } from "../serverFunc/updateMarquee";
-import AdminBannerImages from "./admin.banner.images";
-import AdminImageSlider from "./admin.slider.images";
-import ImageUpload from "./image.upload";
+import { updateMarquee } from "../../serverFunc/updateMarquee"; 
+import AdminBannerImages from "./admin.banner.images"; 
+import AdminImageSlider from "./admin.slider.images"; 
+import ImageUpload from "../image.upload"; 
+import VerifySignupUser from "./verify.signup.member";
+import VerifySignupAdvisor from "./verify.signup.advisor";
 const AdminPage = ({ onLogout }: AdminPageProps) => {
     const [message, setMessage] = useState("");
     const [saving, setSaving] = useState(false);
@@ -60,6 +62,12 @@ const AdminPage = ({ onLogout }: AdminPageProps) => {
                 {/* Image slider */}
                 <div>
                     <AdminImageSlider />
+                </div>
+                <div>
+                    <VerifySignupUser/>
+                </div>
+                <div>
+                    <VerifySignupAdvisor/>
                 </div>
             </div>
             <div className="flex justify-center mt-3">

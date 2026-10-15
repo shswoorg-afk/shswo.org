@@ -1,4 +1,4 @@
-import adminLogin from "../serverFunc/createAdminAuth";
+import adminLogin from "../../serverFunc/createAdminAuth";
 
 type AdminBeforeAuthProps = {
   onLoginSuccess: () => void;

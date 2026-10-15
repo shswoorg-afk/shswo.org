@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMediaByType, deleteMediaById, deleteMediaByType } from "../serverFunc/media.function";
+import { getMediaByType, deleteMediaById, deleteMediaByType } from "../../serverFunc/media.function";
 type SliderImage = {
     _id: string;
     fileId: string;

@@ -1,26 +1,33 @@
+
 import { createServerFn } from "@tanstack/react-start";
 import ImageKit from "@imagekit/nodejs";
 
-export const getImageKitAuth = createServerFn({
-  method: "GET",
-}).handler(async () => {
+function getImageKitClient() {
   const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
 
   if (!privateKey) {
     throw new Error(
-      "IMAGEKIT_PRIVATE_KEY is unavailable in the server runtime.",
+      "IMAGEKIT_PRIVATE_KEY is unavailable. Check server environment loading."
     );
   }
-  const imageKit = new ImageKit({ privateKey });
 
-  const { expire, signature, token } =
-    imageKit.helper.getAuthenticationParameters();
+  return new ImageKit({ privateKey });
+}
 
+export const getImageKitAuth = createServerFn({
+  method: "GET",
+}).handler(async () => {
+  const imageKit = getImageKitClient();
   const publicKey = process.env.VITE_IMAGEKIT_PUBLIC_API_KEY;
 
   if (!publicKey) {
     throw new Error("ImageKit public key is missing.");
   }
 
-  return { expire, signature, token, publicKey };
+  const { token, expire, signature } =
+    imageKit.helper.getAuthenticationParameters();
+
+  return { token, expire, signature, publicKey };
 });
+
+export { getImageKitClient };

@@ -2,8 +2,8 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
-import AdminBeforeAuth from "../../components/admin.before.auth";
-import AdminPage from "../../components/admin";
+import AdminBeforeAuth from "../../components/adminStuff/admin.before.auth";
+import AdminPage from "../../components/adminStuff/admin";
 import verifyAdminSession from "../../lib/verifyAdminSession";
 import adminLogout from "../../serverFunc/adminLogout";
 
