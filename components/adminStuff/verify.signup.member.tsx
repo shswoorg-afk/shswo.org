@@ -14,7 +14,6 @@ type Application = {
   pin: string;
   state: string;
   mobile: string;
-  username: string;
   identityType: "aadhar" | "pan" | "passport" | "voter-id";
   status: string;
   createdAt: string;
@@ -141,9 +140,6 @@ export default function VerifySignupUser() {
                       <h2 className="text-lg font-bold">
                         {application.applicantName}
                       </h2>
-                      <p className="text-sm text-gray-500">
-                        @{application.username}
-                      </p>
                     </div>
 
                     <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">

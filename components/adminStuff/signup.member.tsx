@@ -135,9 +135,6 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         <label htmlFor="mobile">Mobile Number</label>
         <input id="mobile" name="mobile" type="tel" minLength={10} required className="custom-input" placeholder="Enter your phone number" />
 
-        <label htmlFor="username">Username</label>
-        <input id="username" name="username" required minLength={6} maxLength={12} className="custom-input" placeholder="Choose a username" />
-
         <label htmlFor="password">Password</label>
         <input id="password" name="password" type="password" required minLength={8} maxLength={128} className="custom-input" placeholder="Choose a password" />
 

@@ -20,6 +20,14 @@ const MemberApplicationSchema = new Schema(
             type: String,
             required: true,
         },
+        organizationIdUrl: {
+            type: String,
+            required: false,
+        },
+        organizationIdFileId: {
+            type: String,
+            required: false,
+        },
         village: {
             type: String,
             required: true,
@@ -46,7 +54,6 @@ const MemberApplicationSchema = new Schema(
         pin: { type: String, required: true },
         state: { type: String, required: true },
         mobile: { type: String, required: true },
-        username: { type: String, required: true },
         password: { type: String, required: true },
         identityType: {
             type: String,

@@ -10,6 +10,7 @@ import AdminImageSlider from "./admin.slider.images";
 import ImageUpload from "../image.upload"; 
 import VerifySignupUser from "./verify.signup.member";
 import VerifySignupAdvisor from "./verify.signup.advisor";
+import AllMembersList from "./admin.all.members";
 const AdminPage = ({ onLogout }: AdminPageProps) => {
     const [message, setMessage] = useState("");
     const [saving, setSaving] = useState(false);
@@ -68,6 +69,10 @@ const AdminPage = ({ onLogout }: AdminPageProps) => {
                 </div>
                 <div>
                     <VerifySignupAdvisor/>
+                </div>
+                <div>
+                    {/* All members list */}
+                    <AllMembersList/>
                 </div>
             </div>
             <div className="flex justify-center mt-3">

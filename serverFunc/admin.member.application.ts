@@ -16,7 +16,6 @@ export const acceptMemberApplication = createServerFn({
 })
   .validator(reviewSchema)
   .handler(async ({ data }) => {
-    // TODO: Verify admin authorization here.
 
     await connectDb();
 
@@ -78,7 +77,6 @@ export const getPendingApplications = createServerFn({
     pin: application.pin,
     state: application.state,
     mobile: application.mobile,
-    username: application.username,
     identityType: application.identityType,
     status: application.status,
     createdAt: application.createdAt.toISOString(),

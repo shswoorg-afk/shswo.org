@@ -15,13 +15,15 @@ import { Route as ActivitesRouteImport } from './routes/activites'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdvisorsRouteImport } from './routes/advisors'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as GalleryRouteImport } from './routes/gallery'
-import { Route as LoginRouteImport } from './routes/login'
+import { Route as LoginRouteRouteImport } from './routes/login/route'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as OurteamRouteImport } from './routes/ourteam'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as SignupRouteRouteImport } from './routes/signup/route'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as UpcomingProgramsRouteImport } from './routes/upcoming-programs'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
@@ -60,6 +62,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DisclaimerRoute = DisclaimerRouteImport.update({
   id: '/disclaimer',
   path: '/disclaimer',
@@ -75,7 +82,7 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
+const LoginRouteRoute = LoginRouteRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
@@ -95,6 +102,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignupRouteRoute = SignupRouteRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
   path: '/support',
@@ -108,40 +120,42 @@ const UpcomingProgramsRoute = UpcomingProgramsRouteImport.update({
 const LoginIndexRoute = LoginIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => LoginRoute,
+  getParentRoute: () => LoginRouteRoute,
 } as any)
 const LoginAdvisorRoute = LoginAdvisorRouteImport.update({
   id: '/advisor',
   path: '/advisor',
-  getParentRoute: () => LoginRoute,
+  getParentRoute: () => LoginRouteRoute,
 } as any)
 const LoginMemberRoute = LoginMemberRouteImport.update({
   id: '/member',
   path: '/member',
-  getParentRoute: () => LoginRoute,
+  getParentRoute: () => LoginRouteRoute,
 } as any)
 const SignupAdvisorRoute = SignupAdvisorRouteImport.update({
-  id: '/signup/advisor',
-  path: '/signup/advisor',
-  getParentRoute: () => rootRouteImport,
+  id: '/advisor',
+  path: '/advisor',
+  getParentRoute: () => SignupRouteRoute,
 } as any)
 const SignupMemberRoute = SignupMemberRouteImport.update({
-  id: '/signup/member',
-  path: '/signup/member',
-  getParentRoute: () => rootRouteImport,
+  id: '/member',
+  path: '/member',
+  getParentRoute: () => SignupRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRouteRouteWithChildren
+  '/signup': typeof SignupRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/activites': typeof ActivitesRoute
   '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
-  '/login': typeof LoginRouteWithChildren
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/privacy': typeof PrivacyRoute
@@ -155,11 +169,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/signup': typeof SignupRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/activites': typeof ActivitesRoute
   '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
@@ -177,15 +193,17 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRouteRouteWithChildren
+  '/signup': typeof SignupRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/activites': typeof ActivitesRoute
   '/admin': typeof AdminRoute
   '/advisors': typeof AdvisorsRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/disclaimer': typeof DisclaimerRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
-  '/login': typeof LoginRouteWithChildren
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/privacy': typeof PrivacyRoute
@@ -201,15 +219,17 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/login'
+    | '/signup'
     | '/about'
     | '/activites'
     | '/admin'
     | '/advisors'
     | '/contact'
+    | '/dashboard'
     | '/disclaimer'
     | '/events'
     | '/gallery'
-    | '/login'
     | '/members'
     | '/ourteam'
     | '/privacy'
@@ -223,11 +243,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/signup'
     | '/about'
     | '/activites'
     | '/admin'
     | '/advisors'
     | '/contact'
+    | '/dashboard'
     | '/disclaimer'
     | '/events'
     | '/gallery'
@@ -244,15 +266,17 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/login'
+    | '/signup'
     | '/about'
     | '/activites'
     | '/admin'
     | '/advisors'
     | '/contact'
+    | '/dashboard'
     | '/disclaimer'
     | '/events'
     | '/gallery'
-    | '/login'
     | '/members'
     | '/ourteam'
     | '/privacy'
@@ -267,22 +291,22 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRouteRoute: typeof LoginRouteRouteWithChildren
+  SignupRouteRoute: typeof SignupRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   ActivitesRoute: typeof ActivitesRoute
   AdminRoute: typeof AdminRoute
   AdvisorsRoute: typeof AdvisorsRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRoute
   DisclaimerRoute: typeof DisclaimerRoute
   EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
-  LoginRoute: typeof LoginRouteWithChildren
   MembersRoute: typeof MembersRoute
   OurteamRoute: typeof OurteamRoute
   PrivacyRoute: typeof PrivacyRoute
   SupportRoute: typeof SupportRoute
   UpcomingProgramsRoute: typeof UpcomingProgramsRoute
-  SignupAdvisorRoute: typeof SignupAdvisorRoute
-  SignupMemberRoute: typeof SignupMemberRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -329,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/disclaimer': {
       id: '/disclaimer'
       path: '/disclaimer'
@@ -354,7 +385,7 @@ declare module '@tanstack/react-router' {
       id: '/login'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+      preLoaderRoute: typeof LoginRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/members': {
@@ -378,6 +409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/support': {
       id: '/support'
       path: '/support'
@@ -397,71 +435,87 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/login/'
       preLoaderRoute: typeof LoginIndexRouteImport
-      parentRoute: typeof LoginRoute
+      parentRoute: typeof LoginRouteRoute
     }
     '/login/advisor': {
       id: '/login/advisor'
       path: '/advisor'
       fullPath: '/login/advisor'
       preLoaderRoute: typeof LoginAdvisorRouteImport
-      parentRoute: typeof LoginRoute
+      parentRoute: typeof LoginRouteRoute
     }
     '/login/member': {
       id: '/login/member'
       path: '/member'
       fullPath: '/login/member'
       preLoaderRoute: typeof LoginMemberRouteImport
-      parentRoute: typeof LoginRoute
+      parentRoute: typeof LoginRouteRoute
     }
     '/signup/advisor': {
       id: '/signup/advisor'
-      path: '/signup/advisor'
+      path: '/advisor'
       fullPath: '/signup/advisor'
       preLoaderRoute: typeof SignupAdvisorRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof SignupRouteRoute
     }
     '/signup/member': {
       id: '/signup/member'
-      path: '/signup/member'
+      path: '/member'
       fullPath: '/signup/member'
       preLoaderRoute: typeof SignupMemberRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof SignupRouteRoute
     }
   }
 }
 
-interface LoginRouteChildren {
+interface LoginRouteRouteChildren {
   LoginAdvisorRoute: typeof LoginAdvisorRoute
   LoginMemberRoute: typeof LoginMemberRoute
   LoginIndexRoute: typeof LoginIndexRoute
 }
 
-const LoginRouteChildren: LoginRouteChildren = {
+const LoginRouteRouteChildren: LoginRouteRouteChildren = {
   LoginAdvisorRoute: LoginAdvisorRoute,
   LoginMemberRoute: LoginMemberRoute,
   LoginIndexRoute: LoginIndexRoute,
 }
 
-const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+const LoginRouteRouteWithChildren = LoginRouteRoute._addFileChildren(
+  LoginRouteRouteChildren,
+)
+
+interface SignupRouteRouteChildren {
+  SignupAdvisorRoute: typeof SignupAdvisorRoute
+  SignupMemberRoute: typeof SignupMemberRoute
+}
+
+const SignupRouteRouteChildren: SignupRouteRouteChildren = {
+  SignupAdvisorRoute: SignupAdvisorRoute,
+  SignupMemberRoute: SignupMemberRoute,
+}
+
+const SignupRouteRouteWithChildren = SignupRouteRoute._addFileChildren(
+  SignupRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRouteRoute: LoginRouteRouteWithChildren,
+  SignupRouteRoute: SignupRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   ActivitesRoute: ActivitesRoute,
   AdminRoute: AdminRoute,
   AdvisorsRoute: AdvisorsRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRoute,
   DisclaimerRoute: DisclaimerRoute,
   EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
-  LoginRoute: LoginRouteWithChildren,
   MembersRoute: MembersRoute,
   OurteamRoute: OurteamRoute,
   PrivacyRoute: PrivacyRoute,
   SupportRoute: SupportRoute,
   UpcomingProgramsRoute: UpcomingProgramsRoute,
-  SignupAdvisorRoute: SignupAdvisorRoute,
-  SignupMemberRoute: SignupMemberRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

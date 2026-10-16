@@ -28,6 +28,14 @@ const AdvisorApplicationSchema = new Schema(
             type: String,
             required: true,
         },
+        organizationIdUrl: {
+            type: String,
+            required: false,
+        },
+        organizationIdFileId: {
+            type: String,
+            required: false,
+        },
         profilePicId: {
             type: String,
             required: true,

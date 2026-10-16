@@ -79,7 +79,6 @@ export const getAdvisorApplications = createServerFn({
     pin: application.pin,
     state: application.state,
     mobile: application.mobile,
-    username: application.username,
     identityType: application.identityType,
     status: application.status,
     createdAt: application.createdAt.toISOString(),
