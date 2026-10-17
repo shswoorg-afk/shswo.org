@@ -151,10 +151,6 @@ const SignupAdvisor = () => {
         <ImageUploaderProfile
           onUploadComplete={setProfilePic}
         />
-        <p className="text-sm">
-          Note → ₹100 Member Subscription Fee Per Month
-        </p>
-
         {(message || status) && (
           <p role="status" aria-live="polite" className="text-sm text-center text-gray-700">
             {message}

@@ -149,7 +149,7 @@ const SignupMember = () => {
           Note → ₹100 Member Subscription Fee Per Month
         </p>
         <p className="text-sm">
-          Important note : Membership Subscription is Not eligible for deduction under section 80G of the Income Tax Act, 1961.
+          Important note : Membership Subscription is not a donation and is not eligible for deduction under section 80G of the Income Tax Act, 1961.
         </p>
         {(message || status) && (
           <p role="status" aria-live="polite" className="text-sm text-center text-gray-700">
