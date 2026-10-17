@@ -17,6 +17,7 @@ import {
   PiMapPin,
   PiArrowUpRight,
 } from "react-icons/pi";
+import BackButton from "./BackButton";
 
 export const Route = createFileRoute("/donate")({
   component: DonatePage,
@@ -93,6 +94,9 @@ export default function DonatePage() {
     <main className="min-h-screen bg-white text-slate-800">
       {/* Hero */}
       <section className="relative overflow-hidden bg-blue-950 px-5 py-14 text-white sm:py-20">
+        <div>
+          <BackButton to="/" />
+        </div>
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
 
@@ -156,7 +160,7 @@ export default function DonatePage() {
                   Donation QR Code
                 </p>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
-                  <img src="/qr-code.jpeg" alt="QR"  className="rounded-md"/>
+                  <img src="/qr-code.jpeg" alt="QR" className="rounded-md" />
                 </p>
               </div>
             </div>
@@ -269,41 +273,39 @@ export default function DonatePage() {
             {bankDetails.map((item, index) => (
               <div
                 key={item.label}
-                className={`flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 ${
-                  index !== bankDetails.length - 1
+                className={`flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 ${index !== bankDetails.length - 1
                     ? "border-b border-slate-100"
                     : ""
-                }`}
+                  }`}
               >
                 <span className="text-sm text-slate-500">{item.label}</span>
 
                 <div className="flex items-center justify-between gap-3 sm:justify-end">
                   <span
-                    className={`break-words text-sm font-semibold text-slate-900 ${
-                      item.label === "Account Number" ||
-                      item.label === "IFSC Code"
+                    className={`break-words text-sm font-semibold text-slate-900 ${item.label === "Account Number" ||
+                        item.label === "IFSC Code"
                         ? "font-mono"
                         : ""
-                    }`}
+                      }`}
                   >
                     {item.value}
                   </span>
 
                   {(item.label === "Account Number" ||
                     item.label === "IFSC Code") && (
-                    <button
-                      type="button"
-                      onClick={() => copyText(item.label, item.value)}
-                      aria-label={`Copy ${item.label}`}
-                      className="shrink-0 rounded-lg p-2 text-blue-700 transition hover:bg-blue-50"
-                    >
-                      {copied === item.label ? (
-                        <PiCheckCircle className="text-xl" />
-                      ) : (
-                        <PiCopy className="text-xl" />
-                      )}
-                    </button>
-                  )}
+                      <button
+                        type="button"
+                        onClick={() => copyText(item.label, item.value)}
+                        aria-label={`Copy ${item.label}`}
+                        className="shrink-0 rounded-lg p-2 text-blue-700 transition hover:bg-blue-50"
+                      >
+                        {copied === item.label ? (
+                          <PiCheckCircle className="text-xl" />
+                        ) : (
+                          <PiCopy className="text-xl" />
+                        )}
+                      </button>
+                    )}
                 </div>
               </div>
             ))}

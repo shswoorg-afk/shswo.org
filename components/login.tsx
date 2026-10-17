@@ -1,9 +1,13 @@
 import { Link } from "@tanstack/react-router"
+import BackButton from "./BackButton"
 
 const Login = () => {
     return (
         <main className="bg-linear-to-b from-neutral-500 to-blue-400 h-screen flex items-center justify-center text-white">
             <div>
+                <div>
+                    <BackButton to="/"/>
+                </div>
                 <div className="flex justify-center">
                     <h1 className="text-3xl font-bold">Who are you?</h1>
                 </div>

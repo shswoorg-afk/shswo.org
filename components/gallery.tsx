@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMediaByType } from "../serverFunc/media.function";
+import BackButton from "./BackButton";
 
 type GalleryImage = {
   _id: string;
@@ -34,6 +35,9 @@ export default function Gallery() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+        <div>
+            <BackButton to="/"/>
+        </div>
       <div className="mb-8">
         <p className="text-sm font-semibold uppercase tracking-widest text-blue-700">
           Our Moments

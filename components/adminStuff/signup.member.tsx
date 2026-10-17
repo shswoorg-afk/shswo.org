@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { submitMemberApplication, getMemberApplicationStatus } from "../../serverFunc/member.application";
 import ImageUploaderProfile from "./image.uploader.profile";
+import BackButton from "../BackButton";
 const SignupMember = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -90,6 +91,9 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
 
   return (
     <div className="min-h-screen w-full bg-blue-800 rounded-lg font-bold flex flex-col justify-center items-center px-6 py-8">
+      <div>
+        <BackButton to="/"/>
+      </div>
       <h1 className="text-white text-xl mb-3">
         Sign up as Member
       </h1>

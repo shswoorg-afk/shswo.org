@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMediaByType } from "../serverFunc/media.function";
+import BackButton from "./BackButton";
 
 type EventMedia = {
     _id: string;
@@ -38,6 +39,9 @@ const Events = () => {
 
     return (
         <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900 sm:px-6">
+            <div>
+                <BackButton to="/"/>
+            </div>
             <div className="mx-auto max-w-6xl">
                 <header className="mb-8">
                     <p className="text-sm font-semibold uppercase tracking-widest text-blue-700">
