@@ -65,9 +65,6 @@ export default function AdvisorDashboardProfile({
                             <h2 className="mt-1 text-2xl font-bold text-slate-900">
                                 {advisor.fullName}
                             </h2>
-                            <p className="mt-1 text-sm text-slate-500">
-                                Advisor ID: {advisor._id}
-                            </p>
                         </div>
 
                         <span className="w-fit rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold capitalize text-emerald-700">

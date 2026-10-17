@@ -90,9 +90,6 @@ export default function MemberDashboardProfile({
                                     {member.applicantName}
                                 </h2>
                                 <p className="mt-1 text-sm text-slate-500">
-                                    Member ID: {member._id}
-                                </p>
-                                <p className="mt-1 text-sm text-slate-500">
                                     Joining Date: {joiningDate ?? "Not provided"}
                                 </p>
                             </div>

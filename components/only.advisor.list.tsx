@@ -112,12 +112,6 @@ export default function OnlyAdvisors() {
                                         )}
 
                                         <div className="min-w-0 flex-1">
-                                            <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-amber-300">
-                                                Advisor ID
-                                            </p>
-                                            <p className="mt-1 font-mono text-[10px] text-blue-100">
-                                                {advisor._id.slice(-8).toUpperCase()}
-                                            </p>
 
                                             <h3 className="mt-2 break-words text-base font-extrabold leading-snug text-white sm:text-lg">
                                                 {advisor.fullName || "Advisor"}
