@@ -150,7 +150,9 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         <p className="text-sm">
           Note → ₹100 Member Subscription Fee Per Month
         </p>
-
+          <p>
+            Important note : Membership Subscription is Not eligible for deduction under section 80G of the Income Tax Act, 1961.
+          </p>
         {(message || status) && (
           <p role="status" aria-live="polite" className="text-sm text-center text-gray-700">
             {message}

@@ -35,7 +35,7 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
                                 onClick={handleNextImage}><MdArrowRight size={40} /></div>
                         </div>
                         <div className="w-full text-left mt-[25%] pl-15 pr-10">
-                            <Link to="/upcoming-programs">
+                            <Link to="/events">
                                 <h1 className="text-lg whitespace-nowrap underline underline-offset-2">{currentImage.sliderTitle}</h1>
                                 <p className="text-xs italic">{currentImage.sliderText}</p>
                             </Link>
@@ -49,7 +49,7 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
                 </div>
             </div>
             <div>
-                <p className="text-xs md:text-base xl:text-base text-center mt-1 text-blue-800">Click the image above to visit upcoming programs</p>
+                <p className="text-xs md:text-base xl:text-base text-center mt-1 text-blue-800">Click the text above image to visit events</p>
             </div>
         </div>
     );

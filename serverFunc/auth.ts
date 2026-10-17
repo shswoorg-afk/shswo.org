@@ -17,7 +17,7 @@ export const getCurrentUser = createServerFn({
   const member = await MemberApplication.findOne({
     userVerifiedId,
     status: "approved",
-  }).select("_id applicantName mobile");
+  }).select("_id");
 
   if (member) {
     return {
@@ -30,7 +30,7 @@ export const getCurrentUser = createServerFn({
   const advisor = await AdvisorApplication.findOne({
     userVerifiedId,
     status: "approved",
-  }).select("_id fullName mobile");
+  }).select("_id");
 
   if (advisor) {
     return {

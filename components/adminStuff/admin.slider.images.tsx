@@ -86,6 +86,7 @@ const AdminImageSlider = () => {
             await deleteMediaById({
                 data: {
                     id,
+                    type : "image-slider"
                 },
             });
 
@@ -113,7 +114,7 @@ const AdminImageSlider = () => {
             <header className="flex flex-wrap items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-semibold tracking-tight">
-                        Image Slider
+                        Events Image Slider
                     </h1>
                     <p className="mt-1 text-sm text-gray-500">
                         Manage the images displayed in your website slider.
@@ -150,7 +151,7 @@ const AdminImageSlider = () => {
                 <div className="rounded-xl border border-dashed p-10 text-center">
                     <h2 className="font-medium">No slider images found</h2>
                     <p className="mt-2 text-sm text-gray-500">
-                        Uploaded slider images will appear here.
+                        Uploaded events slider images will appear here.
                     </p>
                 </div>
             ) : (
@@ -169,7 +170,7 @@ const AdminImageSlider = () => {
                                 />
 
                                 <span className="absolute left-3 top-3 rounded-md bg-black/70 px-2 py-1 text-xs text-white">
-                                    Slider image
+                                    Events Slider image
                                 </span>
                             </div>
 

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import ImageUpload from '../../components/image.upload'
-import LogOutButton from '../../components/logout.button'
+import OnlyMembers from '../../components/only.member.list'
+import OnlyAdvisors from '../../components/only.advisor.list'
 export const Route = createFileRoute('/ourteam')({
   component: RouteComponent,
 })
@@ -8,8 +8,8 @@ export const Route = createFileRoute('/ourteam')({
 function RouteComponent() {
   return (
     <>
-    <ImageUpload/>
-    <LogOutButton/>
+    <OnlyMembers/>
+    <OnlyAdvisors/>
     </>
   )
 }

@@ -112,10 +112,11 @@ export const deleteMediaByType = createServerFn({ method: "POST" })
     };
   });
 
-  export const deleteMediaById = createServerFn({ method: "POST" })
+export const deleteMediaById = createServerFn({ method: "POST" })
   .validator(
     z.object({
       id: z.string().min(1),
+      type: MediaTypeSchema,
     }),
   )
   .handler(async ({ data }) => {
@@ -129,20 +130,19 @@ export const deleteMediaByType = createServerFn({ method: "POST" })
 
     const media = await MediaModel.findOne({
       _id: data.id,
-      type: "banner",
+      type: data.type,
     });
 
     if (!media) {
-      throw new Error("Banner image not found");
+      throw new Error("Media not found");
     }
 
-    // Delete remote ImageKit file first.
+    // Delete the ImageKit file first.
     await getImageKitClient().files.delete(media.fileId);
 
-    // Delete only this banner's database record.
     await MediaModel.deleteOne({
       _id: media._id,
-      type: "banner",
+      type: data.type,
     });
 
     return { success: true, id: media._id.toString() };

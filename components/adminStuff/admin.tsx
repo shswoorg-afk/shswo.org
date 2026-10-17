@@ -11,6 +11,8 @@ import ImageUpload from "../image.upload";
 import VerifySignupUser from "./verify.signup.member";
 import VerifySignupAdvisor from "./verify.signup.advisor";
 import AllMembersList from "./admin.all.members";
+import AddActivites from "./activties.stuff";
+import BackButton from "../BackButton";
 const AdminPage = ({ onLogout }: AdminPageProps) => {
     const [message, setMessage] = useState("");
     const [saving, setSaving] = useState(false);
@@ -28,6 +30,9 @@ const AdminPage = ({ onLogout }: AdminPageProps) => {
     };
     return (
         <div className="min-h-screen bg-black p-6 text-white font-bold">
+            <div>
+                <BackButton to="/"/> 
+            </div>
             <h1 className="text-2xl font-bold text-center">Admin Dashboard</h1>
             <div className="mt-2">
                 <div>
@@ -55,6 +60,10 @@ const AdminPage = ({ onLogout }: AdminPageProps) => {
                     >
                         {saving ? "Saving..." : "Save announcement"}
                     </button>
+                </div>
+                <div>
+                    {/* Activites */}
+                    <AddActivites/>
                 </div>
                 {/* banner image */}
                 <div>

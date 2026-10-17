@@ -7,8 +7,7 @@ import { createMedia } from '../serverFunc/media.function'
 
 const imageTypes = [
   { label: 'Banner', value: 'banner' },
-  { label: 'Image Slider', value: 'image-slider' },
-  { label: 'Activity', value: 'activity' },
+  { label: 'Events Slider', value: 'image-slider' },
   { label: 'Gallery', value: 'gallery' },
 ] as const
 
@@ -34,7 +33,40 @@ export default function ImageUpload() {
 
   const [sliderTitle, setSliderTitle] = useState('')
   const [sliderText, setSliderText] = useState('')
+      let imageUploaded = false
+    const MAX_IMAGE_MP = 24;
+    const MAX_IMAGE_PIXELS = MAX_IMAGE_MP * 1_000_000;
+  const validateImageResolution = (file: File): Promise<string | null> => {
+    return new Promise((resolve) => {
+      const image = new Image();
+      const objectUrl = URL.createObjectURL(file);
 
+      image.onload = () => {
+        const pixels = image.naturalWidth * image.naturalHeight;
+        const megapixels = pixels / 1_000_000;
+
+        URL.revokeObjectURL(objectUrl);
+
+        if (pixels > MAX_IMAGE_PIXELS) {
+          resolve(
+            `Image resolution is ${megapixels.toFixed(2)} MP. ` +
+            `Maximum allowed is ${MAX_IMAGE_MP} MP. ` +
+            `Please resize the image before uploading.`
+          );
+          return;
+        }
+
+        resolve(null);
+      };
+
+      image.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        resolve("Unable to read this image. Please select a valid image file.");
+      };
+
+      image.src = objectUrl;
+    });
+  };
   async function handleUpload(
     event: React.ChangeEvent<HTMLInputElement>,
   ) {
@@ -75,48 +107,12 @@ export default function ImageUpload() {
     }
 
     setUploading(true)
-
-    let imageUploaded = false
-const MAX_IMAGE_MP = 24;
-const MAX_IMAGE_PIXELS = MAX_IMAGE_MP * 1_000_000;
-const validateImageResolution = (file: File): Promise<string | null> => {
-  return new Promise((resolve) => {
-    const image = new Image();
-    const objectUrl = URL.createObjectURL(file);
-
-    image.onload = () => {
-      const pixels = image.naturalWidth * image.naturalHeight;
-      const megapixels = pixels / 1_000_000;
-
-      URL.revokeObjectURL(objectUrl);
-
-      if (pixels > MAX_IMAGE_PIXELS) {
-        resolve(
-          `Image resolution is ${megapixels.toFixed(2)} MP. ` +
-          `Maximum allowed is ${MAX_IMAGE_MP} MP. ` +
-          `Please resize the image before uploading.`
-        );
-        return;
-      }
-
-      resolve(null);
-    };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      resolve("Unable to read this image. Please select a valid image file.");
-    };
-
-    image.src = objectUrl;
-  });
-};
     try {
       const auth = await getImageKitAuth()
-      const resolutionError =   await validateImageResolution(file);
-      if(resolutionError)
-      {
-          setError(resolutionError);
-          return; 
+      const resolutionError = await validateImageResolution(file);
+      if (resolutionError) {
+        setError(resolutionError);
+        return;
       }
       const result = await upload({
         file,
@@ -150,10 +146,16 @@ const validateImageResolution = (file: File): Promise<string | null> => {
           : {}),
       }
       console.log('Sending media data:', mediaData)
-      await  createMedia({
-        data : mediaData,
+      await createMedia({
+        data: mediaData,
       })
-      setSuccess('Image uploaded and saved successfully.')
+      setSuccess(
+        type === 'gallery'
+          ? 'Gallery image uploaded and saved successfully.'
+          : type === 'image-slider'
+            ? 'Event slider image uploaded and saved successfully.'
+            : 'Banner image uploaded and saved successfully.',
+      )
 
       if (type === 'image-slider') {
         setSliderTitle('')
@@ -212,13 +214,13 @@ const validateImageResolution = (file: File): Promise<string | null> => {
       </div>
 
       {type === 'image-slider' && (
-        <div className="space-y-3 rounded-xl border border-neutral-200 p-4">
+        <div className="space-y-3 rounded-xl border border-neutral-200 p-4 text-white">
           <div className="space-y-1">
             <label
               htmlFor="slider-title"
               className="text-sm font-medium"
             >
-              Slider Title
+              Event Slider Title
             </label>
 
             <input
@@ -228,10 +230,10 @@ const validateImageResolution = (file: File): Promise<string | null> => {
               onChange={(event) =>
                 setSliderTitle(event.target.value)
               }
-              placeholder="Enter slider title"
+              placeholder="Enter event slider title"
               maxLength={100}
               disabled={busy}
-              className="w-full rounded-lg border border-neutral-300 p-2 text-black disabled:opacity-50"
+              className="w-full rounded-lg border border-neutral-300 p-2 disabled:opacity-50"
             />
           </div>
 
@@ -240,7 +242,7 @@ const validateImageResolution = (file: File): Promise<string | null> => {
               htmlFor="slider-text"
               className="text-sm font-medium"
             >
-              Slider Text
+              Event  Slider Text
             </label>
 
             <textarea
@@ -249,11 +251,11 @@ const validateImageResolution = (file: File): Promise<string | null> => {
               onChange={(event) =>
                 setSliderText(event.target.value)
               }
-              placeholder="Enter slider description"
+              placeholder="Enter event slider description"
               maxLength={500}
               rows={3}
               disabled={busy}
-              className="w-full resize-y rounded-lg border border-neutral-300 p-2 text-black disabled:opacity-50"
+              className="w-full resize-y rounded-lg border border-neutral-300 p-2  disabled:opacity-50"
             />
           </div>
         </div>

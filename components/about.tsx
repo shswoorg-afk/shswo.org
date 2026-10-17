@@ -1,6 +1,11 @@
+import BackButton from "./BackButton";
+
 const AboutUs = () => {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
+      <div>
+        <BackButton to="/"/>
+      </div>
       {/* Hero */}
       <section className="bg-linear-to-br from-blue-700 via-blue-800 to-blue-900 px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-6xl">

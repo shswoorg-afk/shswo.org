@@ -1,11 +1,9 @@
-import Carousel from "./carousel";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { MdEvent} from "react-icons/md";
-import ImageSlider from "./image.slider";
-import OurFieldofWorks from "./our.fields.of.work";
-import DisplayMedia from "./media.display";
+import gsap from "gsap";
+import { MdEvent } from "react-icons/md";
 import EventsMarquee from "./events.marquee";
+import DisplayMedia from "./media.display";
+import OurFieldofWorks from "./our.fields.of.work";
 const Hero = () => {
   useGSAP(() => {
     const track = document.querySelector(".events-track") as HTMLElement;
@@ -32,21 +30,22 @@ const Hero = () => {
      <EventsMarquee/>
        <DisplayMedia type="banner"/>
       <div className="px-3">
-        <div className="bg-cyan-100 mt-2 flex justify-center flex-col items-center rounded-xl py-2">
+        <div className="bg-cyan-100 mt-2 flex justify-center flex-col items-center rounded-xl py-2 w-fit mx-auto">
           <h1 className="text-xl md:text-4xl font-bold text-blue-800">
             Who are we?
           </h1>
-
+   <div className="max-w-xl">
           <p className="text-center font-medium text-sm md:text-2xl">
             Saving Humanity Social Work Organization (SHSWO) is a
             community-based organization dedicated to serving humanity
             and supporting people in need.
           </p>
+   </div>
         </div>
       </div>
       <div className="flex justify-center mt-5">
         <p className="bg-blue-800 text-white text-xs md:text-xl xl:text-xl p-2 rounded-xl font-bold flex justify-center items-center gap-x-1">
-          Recent/Upcoming Programmes <MdEvent size={15} />
+          Recent/Upcoming Events <MdEvent size={15} />
         </p>
       </div>
       <DisplayMedia type="image-slider"/>

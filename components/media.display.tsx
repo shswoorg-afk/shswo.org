@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { getMediaByType } from '../serverFunc/media.function'
 import type { MediaItem, MediaType } from '../types/media.types'
 import Carousel from './carousel'
-import ImageSlider from './image.slider'
+import ImageSlider from './events.slider'
 interface MediaDisplayProps {
   type: MediaType
   className?: string

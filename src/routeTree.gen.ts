@@ -17,6 +17,7 @@ import { Route as AdvisorsRouteImport } from './routes/advisors'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as DonateRouteImport } from './routes/donate'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as LoginRouteRouteImport } from './routes/login/route'
@@ -24,8 +25,6 @@ import { Route as MembersRouteImport } from './routes/members'
 import { Route as OurteamRouteImport } from './routes/ourteam'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SignupRouteRouteImport } from './routes/signup/route'
-import { Route as SupportRouteImport } from './routes/support'
-import { Route as UpcomingProgramsRouteImport } from './routes/upcoming-programs'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as LoginAdvisorRouteImport } from './routes/login/advisor'
 import { Route as LoginMemberRouteImport } from './routes/login/member'
@@ -72,6 +71,11 @@ const DisclaimerRoute = DisclaimerRouteImport.update({
   path: '/disclaimer',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
@@ -105,16 +109,6 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const SignupRouteRoute = SignupRouteRouteImport.update({
   id: '/signup',
   path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SupportRoute = SupportRouteImport.update({
-  id: '/support',
-  path: '/support',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const UpcomingProgramsRoute = UpcomingProgramsRouteImport.update({
-  id: '/upcoming-programs',
-  path: '/upcoming-programs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginIndexRoute = LoginIndexRouteImport.update({
@@ -154,13 +148,12 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/privacy': typeof PrivacyRoute
-  '/support': typeof SupportRoute
-  '/upcoming-programs': typeof UpcomingProgramsRoute
   '/login/advisor': typeof LoginAdvisorRoute
   '/login/member': typeof LoginMemberRoute
   '/signup/advisor': typeof SignupAdvisorRoute
@@ -177,13 +170,12 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/privacy': typeof PrivacyRoute
-  '/support': typeof SupportRoute
-  '/upcoming-programs': typeof UpcomingProgramsRoute
   '/login/advisor': typeof LoginAdvisorRoute
   '/login/member': typeof LoginMemberRoute
   '/signup/advisor': typeof SignupAdvisorRoute
@@ -202,13 +194,12 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/ourteam': typeof OurteamRoute
   '/privacy': typeof PrivacyRoute
-  '/support': typeof SupportRoute
-  '/upcoming-programs': typeof UpcomingProgramsRoute
   '/login/advisor': typeof LoginAdvisorRoute
   '/login/member': typeof LoginMemberRoute
   '/signup/advisor': typeof SignupAdvisorRoute
@@ -228,13 +219,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard'
     | '/disclaimer'
+    | '/donate'
     | '/events'
     | '/gallery'
     | '/members'
     | '/ourteam'
     | '/privacy'
-    | '/support'
-    | '/upcoming-programs'
     | '/login/advisor'
     | '/login/member'
     | '/signup/advisor'
@@ -251,13 +241,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard'
     | '/disclaimer'
+    | '/donate'
     | '/events'
     | '/gallery'
     | '/members'
     | '/ourteam'
     | '/privacy'
-    | '/support'
-    | '/upcoming-programs'
     | '/login/advisor'
     | '/login/member'
     | '/signup/advisor'
@@ -275,13 +264,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard'
     | '/disclaimer'
+    | '/donate'
     | '/events'
     | '/gallery'
     | '/members'
     | '/ourteam'
     | '/privacy'
-    | '/support'
-    | '/upcoming-programs'
     | '/login/advisor'
     | '/login/member'
     | '/signup/advisor'
@@ -300,13 +288,12 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRoute
   DisclaimerRoute: typeof DisclaimerRoute
+  DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
   OurteamRoute: typeof OurteamRoute
   PrivacyRoute: typeof PrivacyRoute
-  SupportRoute: typeof SupportRoute
-  UpcomingProgramsRoute: typeof UpcomingProgramsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -367,6 +354,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DisclaimerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -414,20 +408,6 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/support': {
-      id: '/support'
-      path: '/support'
-      fullPath: '/support'
-      preLoaderRoute: typeof SupportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/upcoming-programs': {
-      id: '/upcoming-programs'
-      path: '/upcoming-programs'
-      fullPath: '/upcoming-programs'
-      preLoaderRoute: typeof UpcomingProgramsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login/': {
@@ -509,13 +489,12 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRoute,
   DisclaimerRoute: DisclaimerRoute,
+  DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,
   OurteamRoute: OurteamRoute,
   PrivacyRoute: PrivacyRoute,
-  SupportRoute: SupportRoute,
-  UpcomingProgramsRoute: UpcomingProgramsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

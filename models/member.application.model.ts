@@ -81,8 +81,6 @@ const MemberApplicationSchema = new Schema(
             index: true,
         },
         reviewedAt: Date,
-        reviewedBy: Schema.Types.ObjectId,
-        rejectionReason: String,
         memberId: Schema.Types.ObjectId,
     },
     { timestamps: true }

@@ -18,8 +18,8 @@ const NavBar = ({ user }: NavBarProps) => {
       )}
 
       <header>
-        <nav className="flex flex-col items-center justify-center space-y-2 border border-neutral-600/20">
-          <div className="mt-5 flex items-center gap-x-2 px-2 md:flex-col">
+        <nav className="flex flex-col items-center justify-center border border-neutral-600/20">
+          <div className="mt-5 flex items-center gap-x-2 md:gap-x-5 px-2">
             <img
               src="/logo.webp"
               alt="logo"
@@ -34,22 +34,24 @@ const NavBar = ({ user }: NavBarProps) => {
           </div>
 
           <div className="flex w-full justify-center">
-            <p className="ml-10 text-xs font-medium">
+            <p className="ml-10 text-xs md:text-xl font-medium">
               A Non-Profit Organization
             </p>
           </div>
 
-          <div className="hidden w-full md:block">
-            <ul className="flex w-full flex-wrap justify-center gap-x-2 rounded-lg bg-blue-500 p-2 text-sm font-bold text-white md:p-10 md:text-base">
+          <div className="hidden w-full md:block mt-4">
+            <ul className="flex w-full flex-wrap justify-center gap-x-2 rounded-lg bg-blue-500 p-2 text-sm font-bold text-white md:p-6 md:text-base uppercase">
               <Link to="/">Home &bull;</Link>
               <Link to="/about">About us &bull;</Link>
               <Link to="/activites">Our Activities &bull;</Link>
               <Link to="/ourteam">Our Team &bull;</Link>
-              <Link to="/members">Members &bull;</Link>
-              <Link to="/advisors">Advisors &bull;</Link>
+              {/* <Link to="/members">Members &bull;</Link>
+              <Link to="/advisors">Advisors &bull;</Link> */
+              }
+              <Link to="/signup/member">Member registration &bull;</Link>
               <Link to="/events">Events &bull;</Link>
               <Link to="/gallery">Gallery &bull;</Link>
-              <Link to="/support">Support us &bull;</Link>
+              <Link to="/donate">Donate us &bull;</Link>
               <Link to="/contact">Contact us &bull;</Link>
 
               {user ? (
