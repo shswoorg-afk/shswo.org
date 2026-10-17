@@ -98,10 +98,6 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         onSubmit={handleSubmit}
         className="bg-blue-300 border border-blue-950 flex flex-col md:max-w-xl w-full mx-auto gap-y-2 p-6 md:p-10 max-h-[80vh] overflow-y-auto rounded-xl"
       >
-        <label htmlFor="profile-pic">Profile Pic</label>
-        <ImageUploaderProfile
-          onUploadComplete={setProfilePic}
-        />
         <label htmlFor="applicantName">Applicant Name</label>
         <input id="applicantName" name="applicantName" required className="custom-input" placeholder="John Doe" />
 
@@ -147,10 +143,14 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         </select>
         <label htmlFor="">Upload Proof of Identity</label>
         <ImageUploaderProfile onUploadComplete={setIdentityProof} />
+                <label htmlFor="profile-pic">Passport Size Photo</label>
+        <ImageUploaderProfile
+          onUploadComplete={setProfilePic}
+        />
         <p className="text-sm">
           Note → ₹100 Member Subscription Fee Per Month
         </p>
-          <p>
+          <p className="text-sm">
             Important note : Membership Subscription is Not eligible for deduction under section 80G of the Income Tax Act, 1961.
           </p>
         {(message || status) && (
