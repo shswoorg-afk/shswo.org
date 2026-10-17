@@ -1,12 +1,16 @@
 import { Link } from "@tanstack/react-router";
+import LogOutButton from "./logout.button";
 
 type Advisor = {
     _id: string;
     fullName?: string;
     fatherOrHusbandName?: string;
     mobile?: string;
+    joiningdate?: Date | string;
     status?: string;
-    organizationIdUrl? : string | null,
+    organizationIdUrl?: string | null,
+    proofOfIdentityUrl ? : string,
+    profilePicUrl? : string,
     createdAt?: string | Date | null;
 };
 
@@ -15,15 +19,20 @@ export default function AdvisorDashboardProfile({
 }: {
     advisor: Advisor;
 }) {
+    const joiningDate = advisor.joiningdate
+        ? new Date(advisor.joiningdate).toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+        })
+        : undefined;
     const details = [
         ["Full Name", advisor.fullName],
         ["Father / Husband's Name", advisor.fatherOrHusbandName],
         ["Mobile Number", advisor.mobile],
         [
-            "Application Date",
-            advisor.createdAt
-                ? new Date(advisor.createdAt).toLocaleDateString("en-IN")
-                : undefined,
+            "Joining Date", joiningDate,
+
         ],
     ];
 
@@ -86,7 +95,46 @@ export default function AdvisorDashboardProfile({
                         ))}
                     </div>
                 </section>
-
+                                <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+                    <h2 className="text-lg font-bold text-slate-900">Documents</h2>
+                    <div className="mt-4 flex flex-wrap gap-3 items-center">
+                        {advisor.profilePicUrl && (
+                            <a
+                                href={advisor.profilePicUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                            >
+                                View Profile Photo
+                            </a>
+                        )}
+                        {advisor.proofOfIdentityUrl && (
+                            <a
+                                href={advisor.proofOfIdentityUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                            >
+                                View Identity Proof
+                            </a>
+                        )}
+                        {advisor.organizationIdUrl ? (
+                            <a
+                                href={`${advisor.organizationIdUrl}?ik-attachment=true`}
+                                className="text-blue-600 underline"
+                            >
+                                Download Organization ID
+                            </a>
+                        ) : (
+                            <p className="text-red-500 text-sm">
+                                You don't have Organization ID yet
+                            </p>
+                        )}
+                    </div>
+                </section>
+                <div className="flex justify-center items-center">
+                    <LogOutButton />
+                </div>
                 <p className="mt-6 text-center text-xs text-slate-400">
                     Saving Humanity Social Work Organization
                 </p>

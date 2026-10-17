@@ -32,6 +32,10 @@ const AdvisorApplicationSchema = new Schema(
             type: String,
             required: false,
         },
+        joiningdate : {
+            type : Date,
+            required : true,
+        },
         organizationIdFileId: {
             type: String,
             required: false,

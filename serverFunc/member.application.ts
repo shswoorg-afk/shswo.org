@@ -11,6 +11,7 @@ const applicationSchema = z.object({
   password: z.string().min(8).max(128),
   fatherName: z.string().trim().min(2),
   dob: z.string().min(1),
+  joiningdate : z.string().min(1),
   occupation: z.string().trim().min(1),
   village: z.string().trim().min(1),
   po: z.string().trim().min(1),
@@ -102,7 +103,6 @@ console.log(trackingTokenHash);
 
   return {
     status: application.status,
-    rejectionReason: application.rejectionReason ?? null,
   };
 });
 

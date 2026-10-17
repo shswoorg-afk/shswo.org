@@ -10,6 +10,7 @@ type Application = {
   village: string;
   po: string;
   ps: string;
+  joiningdate : string,
   district: string;
   pin: string;
   state: string;
@@ -159,6 +160,7 @@ export default function VerifySignupAdvisor() {
                     <Detail label="Occupation" value={application.occupation} />
                     <Detail label="Mobile" value={application.mobile} />
                     <Detail label="Village" value={application.village} />
+                    <Detail label="Date of Joining" value={application.joiningdate} />
                     <Detail label="Post office" value={application.po} />
                     <Detail label="Police station" value={application.ps} />
                     <Detail label="District" value={application.district} />

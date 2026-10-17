@@ -6,9 +6,9 @@ import BackButton from "../BackButton";
 const SignupMember = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-const [status, setStatus] = useState<
-  "" | "pending" | "approved" | "rejected" | null
->("");
+  const [status, setStatus] = useState<
+    "" | "pending" | "approved" | "rejected" | null
+  >("");
   const [profilePic, setProfilePic] = useState<{
     url: string;
     fileId: string;
@@ -24,75 +24,68 @@ const [status, setStatus] = useState<
         setStatus(result.status);
         if (result.status === "pending") {
           setMessage("Application submitted! Await admin verification.");
-        } else if (result.status === "approved") {
-          setMessage(
-            "Verification completed! You can now log in with your username and password."
-          );
-        } else if (result.status === "rejected") {
-          setMessage("Your application was rejected.");
-        } else {
-          setMessage("");
         }
       })
       .catch((error) => {
         console.error("Failed to fetch application status:", error);
       });
   }, []);
-const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  if (!profilePic || !identityProof) {
-    setMessage("Please upload your profile picture and proof of identity.");
-    return;
-  }
+    if (!profilePic || !identityProof) {
+      setMessage("Please upload your profile picture and proof of identity.");
+      return;
+    }
 
-  setLoading(true);
-  setMessage("");
+    setLoading(true);
+    setMessage("");
 
-  try {
-    const formData = new FormData(e.currentTarget);
+    try {
+      const formData = new FormData(e.currentTarget);
 
-    await submitMemberApplication({
-      data: {
-        applicantName: String(formData.get("applicantName") ?? ""),
-        fatherName: String(formData.get("fatherName") ?? ""),
-        dob: String(formData.get("dob") ?? ""),
-        occupation: String(formData.get("occupation") ?? ""),
-        village: String(formData.get("village") ?? ""),
-        po: String(formData.get("po") ?? ""),
-        ps: String(formData.get("ps") ?? ""),
-        district: String(formData.get("district") ?? ""),
-        pin: String(formData.get("pin") ?? ""),
-        state: String(formData.get("state") ?? ""),
-        mobile: String(formData.get("mobile") ?? ""),
-        password: String(formData.get("password") ?? ""),
-        identityType: formData.get("identityType") as
-          | "aadhar"
-          | "pan"
-          | "passport"
-          | "voter-id",
-        profilePicUrl: profilePic.url,
-        profilePicId: profilePic.fileId,
-        proofOfIdentityUrl: identityProof.url,
-        proofOfIdentityId: identityProof.fileId,
-      },
-    });
+      await submitMemberApplication({
+        data: {
+          applicantName: String(formData.get("applicantName") ?? ""),
+          fatherName: String(formData.get("fatherName") ?? ""),
+          dob: String(formData.get("dob") ?? ""),
+          occupation: String(formData.get("occupation") ?? ""),
+          village: String(formData.get("village") ?? ""),
+          po: String(formData.get("po") ?? ""),
+          ps: String(formData.get("ps") ?? ""),
+          joiningdate: String(formData.get("joiningdate")),
+          district: String(formData.get("district") ?? ""),
+          pin: String(formData.get("pin") ?? ""),
+          state: String(formData.get("state") ?? ""),
+          mobile: String(formData.get("mobile") ?? ""),
+          password: String(formData.get("password") ?? ""),
+          identityType: formData.get("identityType") as
+            | "aadhar"
+            | "pan"
+            | "passport"
+            | "voter-id",
+          profilePicUrl: profilePic.url,
+          profilePicId: profilePic.fileId,
+          proofOfIdentityUrl: identityProof.url,
+          proofOfIdentityId: identityProof.fileId,
+        },
+      });
 
-    // Show pending status immediately after successful submission
-    setStatus("pending");
-    setMessage("Application submitted! Await admin verification.");
-  } catch (error) {
-    console.error(error);
-    setMessage("Unable to submit your application. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+      // Show pending status immediately after successful submission
+      setStatus("pending");
+      setMessage("Application submitted! Await admin verification.");
+    } catch (error) {
+      console.error(error);
+      setMessage("Unable to submit your application. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-blue-800 rounded-lg font-bold flex flex-col justify-center items-center px-6 py-8">
       <div>
-        <BackButton to="/"/>
+        <BackButton to="/" />
       </div>
       <h1 className="text-white text-xl mb-3">
         Sign up as Member
@@ -110,7 +103,8 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
 
         <label htmlFor="dob">Date of Birth</label>
         <input id="dob" name="dob" type="date" required className="custom-input" />
-
+        <label htmlFor="joiningdate">Date of Joining</label>
+        <input id="joiningdate" name="joiningdate" type="date" required className="custom-input" />
         <label htmlFor="occupation">Occupation</label>
         <input id="occupation" name="occupation" required className="custom-input" placeholder="Eg. Doctor" />
 
@@ -147,16 +141,16 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         </select>
         <label htmlFor="">Upload Proof of Identity</label>
         <ImageUploaderProfile onUploadComplete={setIdentityProof} />
-                <label htmlFor="profile-pic">Passport Size Photo</label>
+        <label htmlFor="profile-pic">Passport Size Photo</label>
         <ImageUploaderProfile
           onUploadComplete={setProfilePic}
         />
         <p className="text-sm">
           Note → ₹100 Member Subscription Fee Per Month
         </p>
-          <p className="text-sm">
-            Important note : Membership Subscription is Not eligible for deduction under section 80G of the Income Tax Act, 1961.
-          </p>
+        <p className="text-sm">
+          Important note : Membership Subscription is Not eligible for deduction under section 80G of the Income Tax Act, 1961.
+        </p>
         {(message || status) && (
           <p role="status" aria-live="polite" className="text-sm text-center text-gray-700">
             {message}

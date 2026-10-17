@@ -10,6 +10,7 @@ type Application = {
   village: string;
   po: string;
   ps: string;
+  joiningdate : Date | string,
   district: string;
   pin: string;
   state: string;
@@ -152,6 +153,10 @@ export default function VerifySignupUser() {
                     <Detail
                       label="Date of birth"
                       value={new Date(application.dob).toLocaleDateString()}
+                    />
+                    <Detail
+                      label="Date of Joining"
+                      value={new Date(application.joiningdate).toLocaleDateString()}
                     />
                     <Detail label="Occupation" value={application.occupation} />
                     <Detail label="Mobile" value={application.mobile} />

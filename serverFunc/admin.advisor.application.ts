@@ -74,6 +74,7 @@ export const getAdvisorApplications = createServerFn({
     occupation: application.occupation,
     village: application.village,
     po: application.po,
+    joiningdate : application.joiningdate.toISOString(),
     ps: application.ps,
     district: application.district,
     pin: application.pin,

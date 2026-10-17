@@ -69,6 +69,7 @@ export const getPendingApplications = createServerFn({
     applicantName: application.applicantName,
     fatherName: application.fatherName,
     dob: application.dob.toISOString(),
+    joiningdate : application.joiningdate.toISOString(),
     occupation: application.occupation,
     village: application.village,
     po: application.po,

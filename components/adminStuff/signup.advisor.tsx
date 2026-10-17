@@ -5,9 +5,9 @@ import { getAdvisorApplicationStatus, submitAdvisorApplication } from "../../ser
 const SignupAdvisor = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-const [status, setStatus] = useState<
-  "" | "pending" | "approved" | "rejected" | null
->("");
+  const [status, setStatus] = useState<
+    "" | "pending" | "approved" | "rejected" | null
+  >("");
   const [profilePic, setProfilePic] = useState<{
     url: string;
     fileId: string;
@@ -37,56 +37,57 @@ const [status, setStatus] = useState<
         console.error("Failed to fetch application status:", error);
       });
   }, []);
-const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  if (!profilePic || !identityProof) {
-    setMessage("Please upload your profile picture and proof of identity.");
-    return;
-  }
+    if (!profilePic || !identityProof) {
+      setMessage("Please upload your profile picture and proof of identity.");
+      return;
+    }
 
-  setLoading(true);
-  setMessage("");
+    setLoading(true);
+    setMessage("");
 
-  try {
-    const formData = new FormData(e.currentTarget);
+    try {
+      const formData = new FormData(e.currentTarget);
 
-    await submitAdvisorApplication({
-      data: {
-        fullName: String(formData.get("fullName") ?? ""),
-        fatherOrHusbandName: String(formData.get("fatherOrHusbandName") ?? ""),
-        dob: String(formData.get("dob") ?? ""),
-        occupation: String(formData.get("occupation") ?? ""),
-        village: String(formData.get("village") ?? ""),
-        po: String(formData.get("po") ?? ""),
-        ps: String(formData.get("ps") ?? ""),
-        district: String(formData.get("district") ?? ""),
-        pin: String(formData.get("pin") ?? ""),
-        state: String(formData.get("state") ?? ""),
-        mobile: String(formData.get("mobile") ?? ""),
-        password: String(formData.get("password") ?? ""),
-        identityType: formData.get("identityType") as
-          | "aadhar"
-          | "pan"
-          | "passport"
-          | "voter-id",
-        profilePicUrl: profilePic.url,
-        profilePicId: profilePic.fileId,
-        proofOfIdentityUrl: identityProof.url,
-        proofOfIdentityId: identityProof.fileId,
-      },
-    });
+      await submitAdvisorApplication({
+        data: {
+          fullName: String(formData.get("fullName") ?? ""),
+          fatherOrHusbandName: String(formData.get("fatherOrHusbandName") ?? ""),
+          dob: String(formData.get("dob") ?? ""),
+          occupation: String(formData.get("occupation") ?? ""),
+          village: String(formData.get("village") ?? ""),
+          po: String(formData.get("po") ?? ""),
+          joiningdate: String(formData.get("joiningdate")),
+          ps: String(formData.get("ps") ?? ""),
+          district: String(formData.get("district") ?? ""),
+          pin: String(formData.get("pin") ?? ""),
+          state: String(formData.get("state") ?? ""),
+          mobile: String(formData.get("mobile") ?? ""),
+          password: String(formData.get("password") ?? ""),
+          identityType: formData.get("identityType") as
+            | "aadhar"
+            | "pan"
+            | "passport"
+            | "voter-id",
+          profilePicUrl: profilePic.url,
+          profilePicId: profilePic.fileId,
+          proofOfIdentityUrl: identityProof.url,
+          proofOfIdentityId: identityProof.fileId,
+        },
+      });
 
-    // Show pending status immediately after successful submission
-    setStatus("pending");
-    setMessage("Application submitted! Await admin verification.");
-  } catch (error) {
-    console.error(error);
-    setMessage("Unable to submit your application. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+      // Show pending status immediately after successful submission
+      setStatus("pending");
+      setMessage("Application submitted! Await admin verification.");
+    } catch (error) {
+      console.error(error);
+      setMessage("Unable to submit your application. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-blue-800 rounded-lg font-bold flex flex-col justify-center items-center px-6 py-8">
@@ -98,10 +99,6 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         onSubmit={handleSubmit}
         className="bg-blue-300 border border-blue-950 flex flex-col md:max-w-xl w-full mx-auto gap-y-2 p-6 md:p-10 max-h-[80vh] overflow-y-auto rounded-xl"
       >
-        <label htmlFor="profile-pic">Profile Pic</label>
-        <ImageUploaderProfile
-          onUploadComplete={setProfilePic}
-        />
         <label htmlFor="fullName">Full Name</label>
         <input id="fullName" name="fullName" required className="custom-input" placeholder="John Doe" />
 
@@ -110,6 +107,9 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
 
         <label htmlFor="dob">Date of Birth</label>
         <input id="dob" name="dob" type="date" required className="custom-input" />
+
+        <label htmlFor="joiningdate">Date of Joining</label>
+        <input id="joiningdate" name="joiningdate" type="date" required className="custom-input" />
 
         <label htmlFor="occupation">Occupation</label>
         <input id="occupation" name="occupation" required className="custom-input" placeholder="Eg. Doctor" />
@@ -147,6 +147,10 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         </select>
         <label htmlFor="">Upload Proof of Identity</label>
         <ImageUploaderProfile onUploadComplete={setIdentityProof} />
+        <label htmlFor="profile-pic">Upload Passport size photo</label>
+        <ImageUploaderProfile
+          onUploadComplete={setProfilePic}
+        />
         <p className="text-sm">
           Note → ₹100 Member Subscription Fee Per Month
         </p>

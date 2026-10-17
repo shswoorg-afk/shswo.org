@@ -16,6 +16,10 @@ const MemberApplicationSchema = new Schema(
             type: Date,
             required: true,
         },
+        joiningdate : {
+         type : Date,
+         required : true
+        }, 
         occupation: {
             type: String,
             required: true,

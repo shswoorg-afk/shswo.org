@@ -13,6 +13,7 @@ const applicationSchema = z.object({
   dob: z.string().min(1),
   occupation: z.string().trim().min(1),
   village: z.string().trim().min(1),
+  joiningdate : z.string().min(1),
   po: z.string().trim().min(1),
   ps: z.string().trim().min(1),
   district: z.string().trim().min(1),
@@ -79,7 +80,6 @@ export const getAdvisorApplicationStatus = createServerFn({
   if (!trackingToken) {
     return {
       status: null,
-      rejectionReason: null,
     };
   }
 

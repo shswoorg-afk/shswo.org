@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { advisorLogin } from "../serverFunc/advisor.login"; 
 export default function AdvisorLogin() {
   const [mobile, setMobile] = useState("");
@@ -7,7 +7,7 @@ export default function AdvisorLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const navigate = useNavigate();
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -19,8 +19,9 @@ export default function AdvisorLogin() {
       const result = await advisorLogin({
         data: { mobile, password },
       });
-
+      navigate({to : "/dashboard"})
       setSuccess(result.message);
+
     } catch (err) {
       setError(
         err instanceof Error

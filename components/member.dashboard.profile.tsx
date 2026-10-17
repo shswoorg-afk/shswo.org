@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import LogOutButton from "./logout.button";
 
 type Member = {
     _id: string;
@@ -13,6 +14,7 @@ type Member = {
     ps?: string;
     district?: string;
     pin?: string;
+    joiningdate?: Date | string,
     state?: string;
     organizationIdUrl?: string | null,
     mobile?: string;
@@ -26,11 +28,19 @@ export default function MemberDashboardProfile({
 }: {
     member: Member;
 }) {
+    const joiningDate = member.joiningdate
+        ? new Date(member.joiningdate).toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+        })
+        : undefined;
     const details = [
         ["Father's Name", member.fatherName],
         ["Date of Birth", member.dob ? new Date(member.dob).toLocaleDateString("en-IN") : undefined],
         ["Occupation", member.occupation],
         ["Mobile", member.mobile],
+        ["Joining Date", joiningDate],
         ["Village", member.village],
         ["Post Office", member.po],
         ["Police Station", member.ps],
@@ -81,6 +91,9 @@ export default function MemberDashboardProfile({
                                 </h2>
                                 <p className="mt-1 text-sm text-slate-500">
                                     Member ID: {member._id}
+                                </p>
+                                <p className="mt-1 text-sm text-slate-500">
+                                    Joining Date: {joiningDate ?? "Not provided"}
                                 </p>
                             </div>
 
@@ -153,6 +166,9 @@ export default function MemberDashboardProfile({
                         )}
                     </div>
                 </section>
+                <div className="flex justify-center items-center">
+                    <LogOutButton />
+                </div>
 
                 <p className="mt-6 text-center text-xs text-slate-400">
                     Saving Humanity Social Work Organization

@@ -32,16 +32,15 @@ const DropDownMenu = ({ onClick, user }: DropDownMenuProps) => {
       </div>
 
       <ul className="flex flex-col items-center gap-y-2 p-2 text-base font-bold">
-        <Link to="/" onClick={onClick}>Home</Link>
-        <Link to="/about" onClick={onClick}>About us</Link>
-        <Link to="/activites" onClick={onClick}>Our Activities</Link>
-        <Link to="/ourteam" onClick={onClick}>Our Team</Link>
-        <Link to="/members" onClick={onClick}>Members</Link>
-        <Link to="/advisors" onClick={onClick}>Advisors</Link>
-        <Link to="/events" onClick={onClick}>Events</Link>
-        <Link to="/gallery" onClick={onClick}>Gallery</Link>
-        <Link to="/support" onClick={onClick}>Support us</Link>
-        <Link to="/contact" onClick={onClick}>Contact us</Link>
+        <Link to="/">Home &bull;</Link>
+        <Link to="/about">About us &bull;</Link>
+        <Link to="/activites">Our Activities &bull;</Link>
+        <Link to="/ourteam">Our Team &bull;</Link>
+        <Link to="/signup/member">Member registration &bull;</Link>
+        <Link to="/events">Events &bull;</Link>
+        <Link to="/gallery">Gallery &bull;</Link>
+        <Link to="/donate">Donate us &bull;</Link>
+        <Link to="/contact">Contact us &bull;</Link>
       </ul>
     </div>
   );
