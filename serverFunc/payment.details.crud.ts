@@ -38,9 +38,9 @@ export const updatePaymentDetails = createServerFn({
 })
     .validator(
         z.object({
-            mobile: z.string().min(1),       // Member application ID
-            paymentStatus: z.string().min(1),
-            paymentDues: z.string().min(1),
+            mobile: z.string().min(1),
+            paymentStatus: z.string(),
+            paymentDues: z.string(),
         })
     )
     .handler(async ({ data }) => {
@@ -52,23 +52,24 @@ export const updatePaymentDetails = createServerFn({
 
         const updated = await MemberApplication.findOneAndUpdate(
             {
-                mobile : data.mobile,
+                mobile: data.mobile,
                 userVerifiedId,
+                "payments.0": { $exists: true },
             },
             {
                 $set: {
-                    "payments.$.paymentStatus": data.paymentStatus,
-                    "payments.$.paymentDues": data.paymentDues,
+                    "payments.0.paymentStatus": data.paymentStatus,
+                    "payments.0.paymentDues": data.paymentDues,
                 },
             },
-            { new: true }
+            { returnDocument: "after" }
         );
 
         return {
             success: Boolean(updated),
             message: updated
                 ? "Payment updated successfully"
-                : "Payment not found",
+                : "Member or payment not found",
         };
     });
 
@@ -79,7 +80,7 @@ export const deletePaymentDetailsbyId = createServerFn({
 })
     .validator(
         z.object({
-            mobile: z.string().min(1),       // Member application ID
+            mobile: z.string().min(1),
         })
     )
     .handler(async ({ data }) => {
@@ -91,12 +92,13 @@ export const deletePaymentDetailsbyId = createServerFn({
 
         const updated = await MemberApplication.findOneAndUpdate(
             {
-                mobile : data.mobile,
+                mobile: data.mobile,
                 userVerifiedId,
             },
             {
-                $pull: {
-                    payments: { _id: data.mobile },
+                $set: {
+                    "payments.0.paymentStatus": "",
+                    "payments.0.paymentDues": "",
                 },
             },
             { new: true }
@@ -105,12 +107,10 @@ export const deletePaymentDetailsbyId = createServerFn({
         return {
             success: Boolean(updated),
             message: updated
-                ? "Payment deleted successfully"
-                : "Payment not found",
+                ? "Payment fields cleared successfully"
+                : "Member not found",
         };
     });
-
-
 // Delete ALL payment records but keep the member document
 export const deleteAllPaymentDetails = createServerFn({
     method: "POST",

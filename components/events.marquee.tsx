@@ -1,5 +1,6 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { getMarquee } from "../serverFunc/getMarquee";
 
 type MarqueeMessage = {
@@ -11,22 +12,21 @@ const EventsMarquee = () => {
   const [messages, setMessages] = useState<MarqueeMessage[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     let active = true;
 
     getMarquee()
       .then((result) => {
-        if (active) {
-          setMessages(result.messages);
-        }
+        if (active) setMessages(result.messages);
       })
       .catch((error) => {
-        console.error("Failed to fetch marquee announcements:", error);
+        console.error("Failed to fetch announcements:", error);
       })
       .finally(() => {
-        if (active) {
-          setLoading(false);
-        }
+        if (active) setLoading(false);
       });
 
     return () => {
@@ -34,17 +34,63 @@ const EventsMarquee = () => {
     };
   }, []);
 
-  if (loading || messages.length === 0) {
-    return <div className="font-bold text-center text-xl">There are no upcoming events yet</div>;
+  useGSAP(
+    () => {
+      const container = containerRef.current;
+      const track = trackRef.current;
+
+      if (!container || !track || messages.length === 0) return;
+
+      const distance = track.scrollWidth - container.clientWidth;
+
+      if (distance <= 0) return;
+
+      const animation = gsap.to(track, {
+        x: -distance,
+        duration: distance / 40,
+        ease: "none",
+        repeat: -1,
+        yoyo: true,
+        repeatDelay: 0.5,
+      });
+
+      return () => {
+        animation.kill();
+        gsap.set(track, { clearProps: "transform" });
+      };
+    },
+    {
+      scope: containerRef,
+      dependencies: [messages],
+      revertOnUpdate: true,
+    }
+  );
+
+  if (loading) {
+    return <p className="text-center text-sm">Loading announcements...</p>;
+  }
+
+  if (messages.length === 0) {
+    return (
+      <p className="text-center text-sm">
+        There are no upcoming events yet.
+      </p>
+    );
   }
 
   return (
-    <div className="events-container h-10 overflow-hidden bg-blue-900 text-sm font-bold italic text-white md:text-xl">
-      <div className="events-track flex h-full w-max items-center gap-x-2 whitespace-nowrap px-2">
+    <div
+      ref={containerRef}
+      className="h-10 overflow-hidden bg-blue-900 text-sm font-bold italic text-white md:text-xl"
+    >
+      <div
+        ref={trackRef}
+        className="flex h-full w-max items-center gap-3 whitespace-nowrap px-4"
+      >
         {messages.map(({ id, message }) => (
-          <div key={id} className="flex items-center gap-x-2">
-            <p className="underline">{message}</p>
-            <span>&bull;</span>
+          <div key={id} className="flex shrink-0 items-center gap-3">
+            <p>{message}</p>
+            <span>•</span>
           </div>
         ))}
       </div>

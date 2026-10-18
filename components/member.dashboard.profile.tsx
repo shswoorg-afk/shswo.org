@@ -19,7 +19,7 @@ type Member = {
     state?: string;
     organizationIdUrl?: string | null,
     mobile?: string;
-        payments?: {
+    payments?: {
         _id?: string;
         paymentStatus?: string | null;
         paymentDues?: string | null;
@@ -59,18 +59,18 @@ export default function MemberDashboardProfile({
     return (
         <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-5xl">      <BackButton
-                        to="/" />
+                to="/" />
                 <header className="mb-8 mt-3">
                     <div>
                         <p className="text-sm font-medium text-blue-700">SHSWO MEMBER PORTAL</p>
                         <div className="flex justify-between w-full">
-                        <h1 className="mt-1 text-2xl font-bold text-slate-900 sm:text-3xl">
-                            My Dashboard
-                        </h1>
-                         <LogOutButton/>
+                            <h1 className="mt-1 text-2xl font-bold text-slate-900 sm:text-3xl">
+                                My Dashboard
+                            </h1>
+                            <LogOutButton />
                         </div>
                     </div>
-              
+
                 </header>
 
                 <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -169,27 +169,41 @@ export default function MemberDashboardProfile({
                     </div>
                 </section>
                 {member.payments && member.payments.length > 0 ? (
-                    <section>
-                        <h2>Payment Details</h2>
+                    <section className="mt-6 overflow-hidden rounded-xl border border-slate-200 bg-white">
+                        <h2 className="border-b border-slate-200 px-5 py-4 text-lg font-semibold text-slate-900">
+                            Payment Details
+                        </h2>
 
-                        {member.payments.map((payment, index) => (
-                            <div key={payment._id?.toString() ?? index}>
-                                <p>
-                                    <strong>Payment Status:</strong>{" "}
-                                    {payment.paymentStatus || "Not updated"}
-                                </p>
+                        <table className="w-full text-left text-sm">
+                            <thead className="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+                                <tr>
+                                    <th className="px-5 py-3 font-semibold">Payment Status</th>
+                                    <th className="px-5 py-3 font-semibold">Payment Dues</th>
+                                </tr>
+                            </thead>
 
-                                <p>
-                                    <strong>Payment Dues:</strong>{" "}
-                                    {payment.paymentDues || "Not updated"}
-                                </p>
-                            </div>
-                        ))}
+                            <tbody className="divide-y divide-slate-100">
+                                {member.payments.map((payment, index) => (
+                                    <tr key={payment._id?.toString() ?? index}>
+                                        <td className="px-5 py-4 font-medium text-slate-800">
+                                            {payment.paymentStatus || "Not updated"}
+                                        </td>
+                                        <td className="px-5 py-4 text-slate-600">
+                                            {payment.paymentDues || "Not updated"}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </section>
                 ) : (
-                    <section  className="mt-6 rounded-2xl border border-slate-200  bg-white p-5 shadow-sm sm:p-8">
-                        <h2 className="text-xl font-semibold text-center">Payment Details</h2>
-                        <p className="text-base font-black text-center mt-2">Payment details haven't been updated yet.</p>
+                    <section className="mt-6 rounded-xl border border-slate-200 bg-white p-6 text-center">
+                        <h2 className="text-lg font-semibold text-slate-900">
+                            Payment Details
+                        </h2>
+                        <p className="mt-2 text-sm text-slate-500">
+                            Payment details haven't been updated yet.
+                        </p>
                     </section>
                 )}
 

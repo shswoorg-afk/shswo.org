@@ -9,7 +9,6 @@ import {
 
 type Payment = {
     _id: string;
-    paymentId: string;
     applicantName: string;
     mobile: string;
     paymentStatus: string;
@@ -139,7 +138,7 @@ const AdminUpdatePaymentDetaills = () => {
                 action={addPayment}
                 className="space-y-3 rounded-lg border p-4"
             >
-                <h2 className="font-semibold">Add Payment</h2>
+                <h2 className="font-semibold md:text-base text-sm">Add Payment (Copy Phone numbers from approved users section)</h2>
 
                 <input
                     type="text"
@@ -192,11 +191,11 @@ const AdminUpdatePaymentDetaills = () => {
             ) : (
                 payments.map((payment) => (
                     <div
-                        key={payment.paymentId}
-                        className="space-y-3 rounded-lg border p-4"
+                        key={payment.mobile}
+                        className="space-y-3 rounded-lg border p-4 bg-white/10"
                     >
-                        <p className="font-semibold">{payment.applicantName}</p>
-                        <p className="text-sm text-gray-500">{payment.mobile}</p>
+                        <p className="font-semibold">Name : {payment.applicantName}</p>
+                        <p className="text-sm">Phone No : {payment.mobile}</p>
 
                         <input
                             type="text"
@@ -204,7 +203,7 @@ const AdminUpdatePaymentDetaills = () => {
                             onChange={(e) =>
                                 setPayments((prev) =>
                                     prev.map((item) =>
-                                        item.paymentId === payment.paymentId
+                                        item.mobile === payment.mobile
                                             ? { ...item, paymentStatus: e.target.value }
                                             : item
                                     )
@@ -220,7 +219,7 @@ const AdminUpdatePaymentDetaills = () => {
                             onChange={(e) =>
                                 setPayments((prev) =>
                                     prev.map((item) =>
-                                        item.paymentId === payment.paymentId
+                                        item.mobile === payment.mobile
                                             ? { ...item, paymentDues: e.target.value }
                                             : item
                                     )
