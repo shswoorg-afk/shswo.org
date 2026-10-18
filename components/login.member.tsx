@@ -1,32 +1,38 @@
-import { useState, type FormEvent } from "react";
+
+import { useState, type FormEvent, type SyntheticEvent } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { memberLogin } from "../serverFunc/member.login";
+
 const MemberLogin = () => {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
   const navigate = useNavigate();
-  async function handleLogin(event: FormEvent<HTMLFormElement>) {
+
+  async function handleLogin(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setLoading(true);
     setError("");
     setSuccess("");
+
     try {
       const result = await memberLogin({
         data: { mobile, password },
       });
 
-      if(result.success)
-      {
+      if (result.success) {
         await navigate({
-          to : "/dashboard",
-          replace : true,
-        })
+          to: "/dashboard",
+          replace: true,
+        });
+        return;
       }
-      setSuccess(result.message);
+
+      setError(result.message);
     } catch (err) {
       setError(
         err instanceof Error
@@ -39,70 +45,119 @@ const MemberLogin = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-blue-800 rounded-lg font-bold flex justify-center items-center px-6 flex-col">
-      <div>
-        <h1 className="text-white text-xl mb-4">Member Login</h1>
-      </div>
+    <main className="flex min-h-screen items-center justify-center bg-white px-4 py-10 font-sans">
+      <div className="w-full max-w-md">
+        <header className="mb-8 flex flex-col items-center text-center">
+          <img
+            src="/logo.webp"
+            alt="SHSWO logo"
+            className="mb-4 h-20 w-20 object-contain"
+          />
 
-      <form
-        onSubmit={handleLogin}
-        className="bg-blue-300 border border-blue-950 flex flex-col w-full max-w-xl mx-auto gap-y-2 p-8 sm:p-20"
-      >
-        <label htmlFor="mobile">Your Phone Number</label>
-        <input
-          id="mobile"
-          type="tel"
-          autoComplete="tel"
-          inputMode="tel"
-          required
-          value={mobile}
-          onChange={(event) => setMobile(event.target.value)}
-          className="custom-input"
-          placeholder="1234567890"
-        />
+          <h1 className="text-3xl font-bold tracking-tight text-green-700">
+            SHSWO
+          </h1>
 
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          autoComplete="current-password"
-          required
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          className="custom-input"
-          placeholder="Your password"
-        />
-
-        {error && (
-          <p role="alert" className="text-sm text-red-800">
-            {error}
+          <p className="mt-1 text-sm font-semibold text-green-700">
+            Member Login Portal
           </p>
-        )}
 
-        {success && (
-          <p role="status" className="text-sm text-green-900">
-            {success}
+          <p className="mt-5 text-xl font-semibold text-slate-800">
+            Welcome back, Member
           </p>
-        )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-950 text-white rounded-2xl p-2 disabled:opacity-50"
+          <p className="mt-2 text-sm font-normal text-slate-500">
+            Sign in to access your member dashboard.
+          </p>
+        </header>
+
+        <form
+          onSubmit={handleLogin}
+          className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-8"
         >
-          {loading ? "Logging in..." : "Login"}
-        </button>
+          <div className="space-y-2">
+            <label
+              htmlFor="mobile"
+              className="block text-sm font-semibold text-slate-700"
+            >
+              Phone Number
+            </label>
 
-        <div className="flex justify-center items-center">
-          <Link
-            to="/signup/member"
-            className="text-sm underline underline-offset-2 text-center"
+            <input
+              id="mobile"
+              type="tel"
+              autoComplete="tel"
+              inputMode="tel"
+              required
+              value={mobile}
+              onChange={(event) => setMobile(event.target.value)}
+              className="custom-input w-full rounded-lg border border-slate-300 bg-white px-4 py-3 font-normal outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              placeholder="Enter your phone number"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-slate-700"
+            >
+              Password
+            </label>
+
+            <input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              className="custom-input w-full rounded-lg border border-slate-300 bg-white px-4 py-3 font-normal outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              placeholder="Enter your password"
+            />
+          </div>
+
+          {error && (
+            <p
+              role="alert"
+              className="rounded-lg bg-red-50 p-3 text-sm font-medium text-red-700"
+            >
+              {error}
+            </p>
+          )}
+
+          {success && (
+            <p
+              role="status"
+              className="text-sm font-medium text-green-700"
+            >
+              {success}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-green-700 px-4 py-3 font-semibold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Sign up as a Member?
-          </Link>
-        </div>
-      </form>
-    </div>
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+
+          <p className="text-center text-sm font-normal text-slate-600">
+            Not a member?{" "}
+            <Link
+              to="/signup/member"
+              className="font-semibold text-green-700 underline-offset-4 hover:underline"
+            >
+              Sign up here
+            </Link>
+          </p>
+        </form>
+
+        <p className="mt-6 text-center text-xs font-normal text-slate-400">
+          Saving Humanity Social Work Organization
+        </p>
+      </div>
+    </main>
   );
 };
 

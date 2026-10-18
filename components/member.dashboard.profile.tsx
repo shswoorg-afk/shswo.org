@@ -8,6 +8,7 @@ type Member = {
     fatherName?: string;
     dob?: string | Date | null;
     occupation?: string;
+    memberId? : string,
     village?: string;
     profilePicUrl?: string;
     proofOfIdentityUrl?: string;
@@ -91,12 +92,16 @@ export default function MemberDashboardProfile({
                             )}
 
                             <div className="flex-1 pb-1">
-                                <h2 className="text-xl font-bold text-slate-900">
+                                <h2 className="text-xl font-bold text-white">
                                     {member.applicantName}
                                 </h2>
-                                <p className="mt-1 text-sm text-slate-500">
+                                <p className="mt-1 text-sm text-slate-500 font-bold">
                                     Joining Date: {joiningDate ?? "Not provided"}
                                 </p>
+                                {
+                                    member.memberId ? <p className="text-green-500 font-bold text-sm bg-green-100 w-fit p-1 rounded-full">Member Id : {member.memberId}</p> : <p className="text-red-600 text-sm font-bold
+                                    ">Member ID not found</p>
+                                }
                             </div>
 
                             <span className="w-fit rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold capitalize text-emerald-700">
@@ -162,7 +167,7 @@ export default function MemberDashboardProfile({
                                 Download Organization ID
                             </a>
                         ) : (
-                            <p className="text-red-500 text-sm">
+                            <p className="text-red-500 text-xs font-bold  text-center">
                                 You don't have Organization ID yet
                             </p>
                         )}

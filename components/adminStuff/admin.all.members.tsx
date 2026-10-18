@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllMembers } from "../../serverFunc/admin.get.all.members";
 import OrganizationIdUploader from "../organization.id.uploader";
+import AdminIdUploader from "./admin.member.id.uploader";
 
 export default function AllMembersList() {
   const [applications, setApplications] = useState<any[]>([]);
@@ -136,6 +137,7 @@ export default function AllMembersList() {
                           collection={application.applicantName ? "member" : "advisor"}
                           imageUrl={application.organizationIdUrl ?? ""}
                         />
+                        <AdminIdUploader _id={application._id}/>
                       </label>
                     )}
                   </td>

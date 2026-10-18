@@ -54,6 +54,7 @@ const MemberApplicationSchema = new Schema(
         },
         po: { type: String, required: true },
         ps: { type: String, required: true },
+        memberId : {type : String, required : false},
         district: { type: String, required: true },
         pin: { type: String, required: true },
         state: { type: String, required: true },
@@ -96,8 +97,6 @@ const MemberApplicationSchema = new Schema(
             default: "pending",
             index: true,
         },
-        reviewedAt: Date,
-        memberId: Schema.Types.ObjectId,
     },
     { timestamps: true }
 );

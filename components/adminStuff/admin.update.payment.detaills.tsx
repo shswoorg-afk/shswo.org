@@ -20,16 +20,29 @@ const AdminUpdatePaymentDetaills = () => {
     const [loading, setLoading] = useState(true);
     const [adding, setAdding] = useState(false);
 
-    const fetchPayments = async () => {
-        try {
-            const data = await getPaymentDetails();
-            setPayments(data as Payment[]);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    };
+   const fetchPayments = async () => {
+    try {
+        const data = await getPaymentDetails();
+
+        setPayments(
+            Array.isArray(data)
+                ? data.map((payment) => ({
+                    ...payment,
+                    _id: String(payment._id ?? ""),
+                    applicantName: payment.applicantName ?? "",
+                    mobile: payment.mobile ?? "",
+                    paymentStatus: payment.paymentStatus ?? "",
+                    paymentDues: payment.paymentDues ?? "",
+                }))
+                : []
+        );
+    } catch (error) {
+        console.error("Failed to fetch payment details:", error);
+        setPayments([]);
+    } finally {
+        setLoading(false);
+    }
+};
 
     useEffect(() => {
         void fetchPayments();
