@@ -13,6 +13,7 @@ import VerifySignupAdvisor from "./verify.signup.advisor";
 import AllMembersList from "./admin.all.members";
 import AddActivites from "./activties.stuff";
 import BackButton from "../BackButton";
+import AdminUpdatePaymentDetaills from "./admin.update.payment.detaills";
 const AdminPage = ({ onLogout }: AdminPageProps) => {
     const [message, setMessage] = useState("");
     const [saving, setSaving] = useState(false);
@@ -72,6 +73,9 @@ const AdminPage = ({ onLogout }: AdminPageProps) => {
                 {/* Image slider */}
                 <div>
                     <AdminImageSlider />
+                </div>
+                <div>
+                    <AdminUpdatePaymentDetaills/>
                 </div>
                 <div>
                     <VerifySignupUser/>

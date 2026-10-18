@@ -16,10 +16,10 @@ const MemberApplicationSchema = new Schema(
             type: Date,
             required: true,
         },
-        joiningdate : {
-         type : Date,
-         required : true
-        }, 
+        joiningdate: {
+            type: Date,
+            required: true
+        },
         occupation: {
             type: String,
             required: true,
@@ -78,6 +78,18 @@ const MemberApplicationSchema = new Schema(
             type: String,
             required: false,
         },
+        payments : [
+            {
+                paymentStatus  : {
+                    type : String,
+                    required : false
+                },
+                paymentDues : {
+                    type : String,
+                    required : false
+                }
+            }
+        ],
         status: {
             type: String,
             enum: ["pending", "approved", "rejected"],

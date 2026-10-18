@@ -6,6 +6,7 @@ const AdvisorApplicationSchema = new Schema(
             type: String,
             required: true,
             trim: true,
+            index : true
         },
         fatherOrHusbandName: {
             type: String,
@@ -36,6 +37,7 @@ const AdvisorApplicationSchema = new Schema(
             type : Date,
             required : true,
         },
+
         organizationIdFileId: {
             type: String,
             required: false,

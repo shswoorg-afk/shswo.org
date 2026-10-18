@@ -56,9 +56,12 @@ export default function AdvisorDashboardProfile({
 
                 <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
                     <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-                        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-50 text-3xl font-bold text-blue-800">
-                            {advisor.fullName?.charAt(0) ?? "A"}
+                        {
+                      advisor.profilePicUrl &&
+                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-200 text-3xl font-bold text-blue-800">
+                            <img src={advisor.profilePicUrl} alt={advisor._id} className="h-full w-full rounded-full p-1"/>
                         </div>
+                        }
 
                         <div className="flex-1">
                             <p className="text-sm font-medium text-blue-700">SHSWO Advisor</p>

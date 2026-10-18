@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import LogOutButton from "./logout.button";
+import BackButton from "./BackButton";
 
 type Member = {
     _id: string;
@@ -18,6 +19,11 @@ type Member = {
     state?: string;
     organizationIdUrl?: string | null,
     mobile?: string;
+        payments?: {
+        _id?: string;
+        paymentStatus?: string | null;
+        paymentDues?: string | null;
+    }[] | null;
     identityType?: string;
     status?: string;
     createdAt?: string | Date | null;
@@ -52,20 +58,19 @@ export default function MemberDashboardProfile({
 
     return (
         <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-5xl">
-                <header className="mb-8 flex items-center justify-between">
+            <div className="mx-auto max-w-5xl">      <BackButton
+                        to="/" />
+                <header className="mb-8 mt-3">
                     <div>
                         <p className="text-sm font-medium text-blue-700">SHSWO MEMBER PORTAL</p>
+                        <div className="flex justify-between w-full">
                         <h1 className="mt-1 text-2xl font-bold text-slate-900 sm:text-3xl">
                             My Dashboard
                         </h1>
+                         <LogOutButton/>
+                        </div>
                     </div>
-                    <Link
-                        to="/"
-                        className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-                    >
-                        Home
-                    </Link>
+              
                 </header>
 
                 <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -163,9 +168,30 @@ export default function MemberDashboardProfile({
                         )}
                     </div>
                 </section>
-                <div className="flex justify-center items-center">
-                    <LogOutButton />
-                </div>
+                {member.payments && member.payments.length > 0 ? (
+                    <section>
+                        <h2>Payment Details</h2>
+
+                        {member.payments.map((payment, index) => (
+                            <div key={payment._id?.toString() ?? index}>
+                                <p>
+                                    <strong>Payment Status:</strong>{" "}
+                                    {payment.paymentStatus || "Not updated"}
+                                </p>
+
+                                <p>
+                                    <strong>Payment Dues:</strong>{" "}
+                                    {payment.paymentDues || "Not updated"}
+                                </p>
+                            </div>
+                        ))}
+                    </section>
+                ) : (
+                    <section  className="mt-6 rounded-2xl border border-slate-200  bg-white p-5 shadow-sm sm:p-8">
+                        <h2 className="text-xl font-semibold text-center">Payment Details</h2>
+                        <p className="text-base font-black text-center mt-2">Payment details haven't been updated yet.</p>
+                    </section>
+                )}
 
                 <p className="mt-6 text-center text-xs text-slate-400">
                     Saving Humanity Social Work Organization
