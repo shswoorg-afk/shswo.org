@@ -40,6 +40,15 @@ export default function AdminIdUploader({
 
     return (
         <div className="min-w-40 space-y-2">
+              {memberId ? (
+                <p className="text-xs font-medium text-green-700">
+                   Member ID : {memberId}
+                </p>
+            ) : (
+                <p className="text-xs text-neutral-500">
+                    Didn't add Member ID yet.
+                </p>
+            )}
             <input
                 type="text"
                 value={value}

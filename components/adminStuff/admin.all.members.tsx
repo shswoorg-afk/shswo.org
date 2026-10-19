@@ -137,7 +137,7 @@ export default function AllMembersList() {
                           collection={application.applicantName ? "member" : "advisor"}
                           imageUrl={application.organizationIdUrl ?? ""}
                         />
-                        <AdminIdUploader _id={application._id}/>
+                        <AdminIdUploader _id={application._id} memberId={application.memberId}/>
                       </label>
                     )}
                   </td>
