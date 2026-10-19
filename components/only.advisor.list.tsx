@@ -24,7 +24,13 @@ export default function OnlyAdvisors() {
         async function loadAdvisors() {
             try {
                 const result = await getOnlyAdvisor();
-                setAdvisors(result);
+                setAdvisors(
+                    [...result].sort(
+                        (a, b) =>
+                            new Date(a.createdAt ?? 0).getTime() -
+                            new Date(b.createdAt ?? 0).getTime()
+                    )
+                );
             } catch (error) {
                 console.error("Failed to load advisors:", error);
             } finally {

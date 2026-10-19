@@ -2,13 +2,39 @@ import { useEffect, useState } from "react";
 import { getAllMembers } from "../../serverFunc/admin.get.all.members";
 import OrganizationIdUploader from "../organization.id.uploader";
 import AdminIdUploader from "./admin.member.id.uploader";
-
+import { deleteMemberOrAdvisorById } from "../../serverFunc/admin.get.all.members";
 export default function AllMembersList() {
   const [applications, setApplications] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to permanently delete this user?")) {
+      return;
+    }
 
+    try {
+      setDeletingId(id);
+
+      const result = await deleteMemberOrAdvisorById({
+        data: { id },
+      });
+
+      if (result.success) {
+        setApplications((prev) =>
+          prev.filter((application) => String(application._id) !== id)
+        );
+      }
+
+      alert(result.message);
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      alert("Failed to delete user.");
+    } finally {
+      setDeletingId(null);
+    }
+  };
   useEffect(() => {
     getAllMembers()
       .then((data) => {
@@ -82,6 +108,7 @@ export default function AllMembersList() {
                 <th className="px-5 py-4 font-medium">Mobile</th>
                 <th className="px-5 py-4 font-medium">Status</th>
                 <th className="px-5 py-4 font-medium">Organization ID</th>
+                <th className="px-5 py-4 font-medium">Action</th>
               </tr>
             </thead>
 
@@ -103,8 +130,8 @@ export default function AllMembersList() {
                   <td className="px-5 py-4">
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-medium ${application.fullName
-                          ? "bg-blue-50 text-blue-700"
-                          : "bg-purple-50 text-purple-700"
+                        ? "bg-blue-50 text-blue-700"
+                        : "bg-purple-50 text-purple-700"
                         }`}
                     >
                       {application.fullName ? "Advisor" : "Member"}
@@ -131,15 +158,25 @@ export default function AllMembersList() {
                         View ID
                       </a>
                     ) : (
-                      <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 px-3 py-2 text-sm hover:bg-neutral-50">
+                      <label className="flex flex-col cursor-pointer justify-center gap-2 rounded-lg border border-neutral-200 px-3 py-2 text-sm hover:bg-neutral-50">
                         <OrganizationIdUploader
                           applicationId={String(application._id)}
                           collection={application.applicantName ? "member" : "advisor"}
                           imageUrl={application.organizationIdUrl ?? ""}
                         />
-                        <AdminIdUploader _id={application._id} memberId={application.memberId}/>
+                        <AdminIdUploader _id={application._id} memberId={application.memberId} />
                       </label>
                     )}
+                  </td>
+                  <td className="px-5 py-4">
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(String(application._id))}
+                      disabled={deletingId === String(application._id)}
+                      className="rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {deletingId === String(application._id) ? "Deleting..." : "Delete"}
+                    </button>
                   </td>
                 </tr>
               ))}

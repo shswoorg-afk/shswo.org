@@ -105,7 +105,8 @@ export default function OrganizationIdUploader({
                 type="button"
                 onClick={() => inputRef.current?.click()}
                 disabled={uploading}
-                className="inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-full font-bold
+                 text-xs border py-1 px-2  md:px-4  disabled:opacity-50"
             >
                 <MdImage size={20} />
                 {uploading

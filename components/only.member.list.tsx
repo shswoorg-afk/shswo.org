@@ -25,7 +25,13 @@ export default function OnlyMembers() {
         async function loadMembers() {
             try {
                 const result = await getOnlyMembers();
-                setMembers(result);
+                setMembers(
+                    [...result].sort(
+                        (a, b) =>
+                            new Date(a.createdAt ?? 0).getTime() -
+                            new Date(b.createdAt ?? 0).getTime()
+                    )
+                );
             } catch (error) {
                 console.error("Failed to load members:", error);
             } finally {
@@ -39,7 +45,7 @@ export default function OnlyMembers() {
     return (
         <main className="min-h-screen bg-blue-800 px-3 py-6 text-slate-900 sm:px-6 sm:py-10">
             <div>
-                <BackButton to="/"/>
+                <BackButton to="/" />
             </div>
             <div className="mx-auto max-w-7xl mt-7">
                 <header className="mb-6 px-1 text-white sm:mb-8">
@@ -113,13 +119,12 @@ export default function OnlyMembers() {
 
                                         <div className="min-w-0 flex-1">
                                             <span
-                                                className={`mt-2 inline-flex max-w-full items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold capitalize sm:text-xs ${
-                                                    member.status === "approved"
+                                                className={`mt-2 inline-flex max-w-full items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold capitalize sm:text-xs ${member.status === "approved"
                                                         ? "bg-emerald-100 text-emerald-700"
                                                         : member.status === "rejected"
-                                                          ? "bg-red-100 text-red-700"
-                                                          : "bg-amber-100 text-amber-700"
-                                                }`}
+                                                            ? "bg-red-100 text-red-700"
+                                                            : "bg-amber-100 text-amber-700"
+                                                    }`}
                                             >
                                                 <span className="size-1.5 rounded-full bg-current" />
                                                 {member.status || "Pending"}

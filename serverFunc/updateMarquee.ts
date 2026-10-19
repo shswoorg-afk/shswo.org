@@ -20,9 +20,9 @@ export const updateMarquee = createServerFn({
     if (!session.authenticated) {
       throw new Error("Unauthorized");
     }
-    else{
+    else {
       console.log("you are authenticated");
-      
+
     }
     await connectDb();
 
@@ -33,8 +33,60 @@ export const updateMarquee = createServerFn({
     return {
       success: true,
       marquee: {
-        id: marquee._id.toString(),
+        _id: marquee._id.toString(),
         message: marquee.message,
       },
     };
   });
+
+export const deleteAnnouncementById = createServerFn({
+  method: "POST",
+})
+  .validator(
+    z.object({
+      _id: z.string().min(1),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const session = await verifyAdminSession();
+
+    if (!session.authenticated) {
+      throw new Error("Unauthorized");
+    }
+
+    await connectDb();
+
+    const deleted = await Marquee.findByIdAndDelete(data._id);
+
+    if (!deleted) {
+      return {
+        success: false,
+        message: "Announcement not found.",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Announcement deleted successfully.",
+    };
+  });
+
+
+export const getMarquee = createServerFn({
+  method: "GET",
+}).handler(async () => {
+  await connectDb();
+
+  const messages = await Marquee.find({})
+    .sort({ createdAt: -1 })
+    .lean();
+
+  return JSON.parse(
+    JSON.stringify({
+      messages: messages.map((item) => ({
+        _id: item._id,
+        message: item.message,
+      })),
+    }),
+  );
+});
