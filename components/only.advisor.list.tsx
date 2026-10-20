@@ -153,6 +153,10 @@ export default function OnlyAdvisors() {
 
                                     <div className="grid grid-cols-2 gap-x-3 gap-y-4 rounded-xl border border-slate-100 bg-slate-50 p-3 sm:gap-x-4 sm:p-4">
                                         <Detail
+                                            label="Your Name"
+                                            value={advisor.fullName}
+                                        />
+                                        <Detail
                                             label="Father / Husband"
                                             value={advisor.fatherOrHusbandName}
                                         />
@@ -202,7 +206,7 @@ function Detail({
             <p className="text-[9px] font-semibold uppercase tracking-wider text-slate-400 sm:text-[10px]">
                 {label}
             </p>
-            <p className="mt-1 break-words text-xs font-semibold leading-5 text-slate-800 sm:text-sm">
+            <p className="mt-1  wrap-break-word text-xs font-bold tracking-wide leading-5 text-slate-800 sm:text-sm">
                 {value || "—"}
             </p>
         </div>

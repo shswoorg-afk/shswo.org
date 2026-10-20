@@ -9,7 +9,7 @@ export const getOnlyAdvisor = createServerFn({
 
     const users = await AdvisorApplication.find({})
         .select(
-            "_id applicantName fatherOrHusbandName dob occupation village profilePicUrl proofOfIdentityUrl po ps district pin state mobile identityType status createdAt organizationIdUrl"
+            "_id fullName applicantName fatherOrHusbandName dob occupation village profilePicUrl proofOfIdentityUrl po ps district pin state mobile identityType status createdAt organizationIdUrl"
         )
         .sort({ createdAt: -1 })
         .lean();
