@@ -1,7 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
-
+import {Toaster} from "react-hot-toast"
 import appCss from '../styles.css?url';
 import fontCss from "../fonts.css?url";
 export const Route = createRootRoute({
@@ -44,6 +44,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <Toaster position='top-right'/>
         {children}
         <TanStackDevtools
           config={{

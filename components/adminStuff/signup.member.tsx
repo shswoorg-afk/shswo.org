@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { submitMemberApplication, getMemberApplicationStatus } from "../../serverFunc/member.application";
 import ImageUploaderProfile from "./image.uploader.profile";
+import toast from "react-hot-toast";
 import BackButton from "../BackButton";
 const SignupMember = () => {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ const SignupMember = () => {
     url: string;
     fileId: string;
   } | null>(null);
-
+  const [checkingStatus, setCheckingStatus] = useState(true);
   const [identityProof, setIdentityProof] = useState<{
     url: string;
     fileId: string;
@@ -22,12 +23,27 @@ const SignupMember = () => {
     getMemberApplicationStatus()
       .then((result) => {
         setStatus(result.status);
+
         if (result.status === "pending") {
-          setMessage("Application submitted! Await admin verification.");
+          const msg =
+            "Your application is pending admin verification. You cannot submit another application.";
+
+          setMessage(msg);
+          toast(msg, { icon: "⏳", duration: 5000 });
+        } else if (result.status === "approved") {
+          setMessage("Verification successful");
+          toast.success("Your membership has been approved!");
+        } else if (result.status === "rejected") {
+          setMessage("Your verification has been rejected.");
+          toast.error("Your application was rejected.");
         }
       })
       .catch((error) => {
         console.error("Failed to fetch application status:", error);
+        toast.error("Unable to check your application status.");
+      })
+      .finally(() => {
+        setCheckingStatus(false);
       });
   }, []);
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -73,7 +89,9 @@ const SignupMember = () => {
 
       // Show pending status immediately after successful submission
       setStatus("pending");
-      setMessage("Application submitted! Await admin verification.");
+      const msg = "Application submitted! Await admin verification.";
+      setMessage(msg);
+      toast.success(msg);
     } catch (error) {
       console.error(error);
       setMessage("Unable to submit your application. Please try again.");
@@ -237,10 +255,23 @@ const SignupMember = () => {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={
+              loading ||
+              checkingStatus ||
+              status === "pending" ||
+              status === "approved"
+            }
             className="mt-4 rounded-xl bg-green-800 p-3 font-semibold text-white transition-colors hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {loading ? "Submitting..." : "Submit Request to Admin"}
+            {checkingStatus
+              ? "Checking Application..."
+              : loading
+                ? "Submitting..."
+                : status === "pending"
+                  ? "Application Pending"
+                  : status === "approved"
+                    ? "Already Verified"
+                    : "Submit Request to Admin"}
           </button>
         </form>
 
