@@ -1,9 +1,8 @@
-
 import { useEffect, useState } from "react";
 import { submitMemberApplication, getMemberApplicationStatus } from "../../serverFunc/member.application";
 import ImageUploaderProfile from "./image.uploader.profile";
-import toast from "react-hot-toast";
 import BackButton from "../BackButton";
+import PendingApplicationPopup from "../pending.application.popup";
 const SignupMember = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -14,7 +13,7 @@ const SignupMember = () => {
     url: string;
     fileId: string;
   } | null>(null);
-  const [checkingStatus, setCheckingStatus] = useState(true);
+  const [showPendingPopup, setShowPendingPopup] = useState(false);
   const [identityProof, setIdentityProof] = useState<{
     url: string;
     fileId: string;
@@ -23,27 +22,18 @@ const SignupMember = () => {
     getMemberApplicationStatus()
       .then((result) => {
         setStatus(result.status);
-
         if (result.status === "pending") {
-          const msg =
-            "Your application is pending admin verification. You cannot submit another application.";
-
-          setMessage(msg);
-          toast(msg, { icon: "⏳", duration: 5000 });
-        } else if (result.status === "approved") {
+          setMessage("Application submitted! Await admin verification.");
+        }
+        else if (result.status === "approved") {
           setMessage("Verification successful");
-          toast.success("Your membership has been approved!");
-        } else if (result.status === "rejected") {
-          setMessage("Your verification has been rejected.");
-          toast.error("Your application was rejected.");
+        }
+        else if (result.status === "rejected") {
+          setMessage("Your verfication have been rejected");
         }
       })
       .catch((error) => {
         console.error("Failed to fetch application status:", error);
-        toast.error("Unable to check your application status.");
-      })
-      .finally(() => {
-        setCheckingStatus(false);
       });
   }, []);
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -87,11 +77,15 @@ const SignupMember = () => {
         },
       });
 
-      // Show pending status immediately after successful submission
+      // Show pending status immediately after successful submission 
       setStatus("pending");
-      const msg = "Application submitted! Await admin verification.";
-      setMessage(msg);
-      toast.success(msg);
+      setMessage("Application submitted! Await admin verification.");
+      setShowPendingPopup(true);
+
+      // Reset fields for another application
+      e.currentTarget.reset();
+      setProfilePic(null);
+      setIdentityProof(null)
     } catch (error) {
       console.error(error);
       setMessage("Unable to submit your application. Please try again.");
@@ -103,6 +97,10 @@ const SignupMember = () => {
   return (
 
     <div className="min-h-screen w-full bg-white px-4 py-8 sm:px-6 sm:py-12">
+      <PendingApplicationPopup
+        isOpen={showPendingPopup}
+        onClose={() => setShowPendingPopup(false)}
+      />
       <div className="mx-auto flex w-full max-w-xl flex-col items-center">
         <div className="mb-6 flex w-full items-center justify-between">
           <BackButton to="/" />
@@ -255,23 +253,10 @@ const SignupMember = () => {
 
           <button
             type="submit"
-            disabled={
-              loading ||
-              checkingStatus ||
-              status === "pending" ||
-              status === "approved"
-            }
+            disabled={loading}
             className="mt-4 rounded-xl bg-green-800 p-3 font-semibold text-white transition-colors hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {checkingStatus
-              ? "Checking Application..."
-              : loading
-                ? "Submitting..."
-                : status === "pending"
-                  ? "Application Pending"
-                  : status === "approved"
-                    ? "Already Verified"
-                    : "Submit Request to Admin"}
+            {loading ? "Submitting..." : "Submit Request to Admin"}
           </button>
         </form>
 
